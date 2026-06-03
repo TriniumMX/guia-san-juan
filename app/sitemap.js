@@ -1,0 +1,24 @@
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://guiasanjuan.mx';
+
+export default function sitemap() {
+  return [
+    {
+      url:             SITE_URL,
+      lastModified:    new Date(),
+      changeFrequency: 'weekly',
+      priority:        1,
+    },
+    {
+      url:             `${SITE_URL}/#feria`,
+      lastModified:    new Date(),
+      changeFrequency: 'weekly',
+      priority:        0.9,
+    },
+    {
+      url:             `${SITE_URL}/#proyecto`,
+      lastModified:    new Date(),
+      changeFrequency: 'monthly',
+      priority:        0.7,
+    },
+  ];
+}

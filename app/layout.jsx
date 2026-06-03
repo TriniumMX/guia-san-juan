@@ -1,12 +1,73 @@
 import Script from 'next/script';
 import './globals.css';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://guiasanjuan.mx';
+
 export const metadata = {
-  title: 'Guía San Juan — Descubre San Juan del Río en un solo lugar',
+  metadataBase: new URL(SITE_URL),
+
+  title: {
+    default: 'Guía San Juan — Descubre San Juan del Río, Querétaro',
+    template: '%s | Guía San Juan',
+  },
   description:
-    'Guía San Juan es una iniciativa digital independiente para descubrir eventos, lugares, servicios y negocios de San Juan del Río. Empezamos con la Feria San Juan 2026.',
+    'Descubre eventos, lugares, restaurantes y negocios en San Juan del Río, Querétaro. Tu guía digital independiente — Feria San Juan 2026, lugares para visitar, comercios locales y más.',
+  keywords: [
+    'San Juan del Río',
+    'San Juan del Río Querétaro',
+    'Feria San Juan del Río 2026',
+    'qué hacer en San Juan del Río',
+    'eventos San Juan del Río',
+    'lugares San Juan del Río',
+    'restaurantes San Juan del Río',
+    'guía San Juan del Río',
+    'Querétaro',
+  ],
+  authors:   [{ name: 'Trinium', url: 'https://trinium.com.mx' }],
+  creator:   'Trinium',
+  publisher: 'Trinium',
+
+  alternates: {
+    canonical: SITE_URL,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  openGraph: {
+    type:        'website',
+    locale:      'es_MX',
+    url:         SITE_URL,
+    siteName:    'Guía San Juan',
+    title:       'Guía San Juan — Descubre San Juan del Río, Querétaro',
+    description: 'Descubre eventos, lugares, restaurantes y negocios en San Juan del Río, Querétaro. Tu guía digital independiente.',
+    images: [
+      {
+        url:    '/assets/puente_san_juan.webp',
+        width:  1200,
+        height: 800,
+        alt:    'Puente de la Historia — San Juan del Río, Querétaro',
+      },
+    ],
+  },
+
+  twitter: {
+    card:        'summary_large_image',
+    title:       'Guía San Juan — San Juan del Río, Querétaro',
+    description: 'Tu guía digital independiente para San Juan del Río, Querétaro.',
+    images:      ['/assets/puente_san_juan.webp'],
+  },
+
   icons: {
-    icon: '/assets/logo-GS.png',
+    icon:  '/assets/logo-GS.png',
     apple: '/assets/logo-GS.png',
   },
 };

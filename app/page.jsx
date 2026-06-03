@@ -4,9 +4,90 @@ import BadgeDays from '../components/BadgeDays';
 import ProposalModal from '../components/ProposalModal';
 import ClientEffects from '../components/ClientEffects';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://guiasanjuan.mx';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type':    'WebSite',
+    name:        'Guía San Juan',
+    url:         SITE_URL,
+    description: 'Guía digital independiente de San Juan del Río, Querétaro.',
+    inLanguage:  'es-MX',
+    publisher: {
+      '@type': 'Organization',
+      name:    'Trinium',
+      url:     'https://trinium.com.mx',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type':    'Organization',
+    name:        'Trinium',
+    url:         'https://trinium.com.mx',
+    logo:        `${SITE_URL}/assets/trinium-logo.png`,
+    contactPoint: {
+      '@type':     'ContactPoint',
+      telephone:   '+52-427-100-0100',
+      email:       'hola@trinium.mx',
+      contactType: 'customer service',
+      areaServed:  'MX',
+    },
+    address: {
+      '@type':           'PostalAddress',
+      addressLocality:   'San Juan del Río',
+      addressRegion:     'Querétaro',
+      addressCountry:    'MX',
+    },
+  },
+  {
+    '@context':  'https://schema.org',
+    '@type':     'Event',
+    name:        'Feria San Juan del Río 2026',
+    description: 'Feria anual de San Juan del Río, Querétaro. Artistas, escenarios, actividades y más del 18 al 30 de junio de 2026.',
+    startDate:   '2026-06-18',
+    endDate:     '2026-06-30',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    url:         'https://guiaferiasjr.vercel.app',
+    location: {
+      '@type': 'Place',
+      name:    'San Juan del Río',
+      address: {
+        '@type':         'PostalAddress',
+        addressLocality: 'San Juan del Río',
+        addressRegion:   'Querétaro',
+        addressCountry:  'MX',
+      },
+    },
+    organizer: {
+      '@type': 'Organization',
+      name:    'Guía San Juan',
+      url:     SITE_URL,
+    },
+  },
+  {
+    '@context':    'https://schema.org',
+    '@type':       'TouristDestination',
+    name:          'San Juan del Río',
+    description:   'Ciudad del estado de Querétaro, México. Conocida por su historia, artesanías, vinos y la Feria San Juan.',
+    url:           SITE_URL,
+    touristType:   ['Familia', 'Cultura', 'Gastronomía'],
+    containedInPlace: {
+      '@type':    'State',
+      name:       'Querétaro',
+      addressCountry: 'MX',
+    },
+  },
+];
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ClientEffects />
 
       {/* HEADER */}
