@@ -176,7 +176,7 @@ export default function Home() {
                   </span>
                   <span>
                     <span className="t">Puente de la Historia</span>
-                    <span className="s"> Símbolo de San Juan del Río</span>
+                    <span className="s">Símbolo de San Juan del Río</span>
                   </span>
                 </div>
               </div>
@@ -361,7 +361,7 @@ export default function Home() {
                 height={597}
               />
               <p>
-                Guía San Juan es un proyecto de <a href="https://trinium.com.mx" target="_blank" rel="noopener noreferrer"><b>Trinium.</b></a>
+                Guía San Juan es un proyecto de <a href="https://trinium.com.mx" target="_blank" rel="noopener noreferrer"><b>Trinium.</b></a>{' '}
                 Creamos sitios web, software y soluciones digitales con corazón.
               </p>
               <a
@@ -415,7 +415,7 @@ export default function Home() {
           </div>
           <div className="footer-bottom">
             <p>No somos sitio oficial del Ayuntamiento ni del Patronato de Feria. Iniciativa independiente creada por Trinium.</p>
-            <span className="made">© 2026 Guía San Juan · Hecho con 💙 por <b>Trinium</b></span>
+            <span className="made">© 2026 Guía San Juan · Hecho con 💙 por <a href="https://trinium.com.mx/" target="_blank" rel="noopener noreferrer"><b>Trinium</b></a></span>
           </div>
         </div>
       </footer>
