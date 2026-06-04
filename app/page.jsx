@@ -371,7 +371,7 @@ export default function Home() {
                 rel="noopener noreferrer"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a13 13 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.1 1.523 5.82L.057 23.053c-.112.383.238.733.62.62l5.228-1.466A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/>
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8 12.27C8.14 12.44 9.76 14.94 12.25 16C12.84 16.27 13.3 16.42 13.66 16.53C14.25 16.72 14.79 16.69 15.22 16.63C15.7 16.56 16.68 16.03 16.89 15.45C17.1 14.87 17.1 14.37 17.04 14.27C16.97 14.17 16.81 14.1 16.56 13.98C16.31 13.86 15.09 13.26 14.87 13.18C14.64 13.1 14.5 13.06 14.31 13.31C14.13 13.56 13.67 14.1 13.53 14.27C13.38 14.44 13.24 14.46 13 14.34C12.74 14.22 11.94 13.96 11 13.12C10.26 12.47 9.77 11.67 9.62 11.42C9.48 11.17 9.61 11.04 9.73 10.92C9.84 10.81 9.98 10.63 10.1 10.48C10.21 10.34 10.25 10.23 10.33 10.07C10.41 9.9 10.37 9.76 10.31 9.64C10.25 9.52 9.77 8.3 9.56 7.81C9.36 7.34 9.16 7.4 9 7.39C8.86 7.39 8.7 7.33 8.53 7.33Z"/>
                 </svg>
                 ¿Quieres una página como esta? Escríbenos <span className="arrow">→</span>
               </a>
@@ -382,40 +382,72 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="site-footer" aria-label="Pie de página">
+        <div className="footer-bloom footer-bloom--1" aria-hidden="true" />
+        <div className="footer-bloom footer-bloom--2" aria-hidden="true" />
+        <div className="footer-bloom footer-bloom--3" aria-hidden="true" />
+        <span className="fdot fdot--1" aria-hidden="true" />
+        <span className="fdot fdot--2" aria-hidden="true" />
+        <span className="fdot fdot--3" aria-hidden="true" />
+        <span className="fdot fdot--4" aria-hidden="true" />
+        <span className="fdot fdot--5" aria-hidden="true" />
+        <span className="fdot fdot--6" aria-hidden="true" />
         <div className="wrap">
           <div className="footer-top">
             <div className="footer-brand">
-              <a className="brand" href="#top">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/logo-GS.png" alt="" className="brand-logo" width={38} height={38} />
+              <a className="brand footer-brand-link" href="#top" aria-label="Guía San Juan, inicio">
+                <span className="footer-logo-wrap">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/assets/logo-GS.png" alt="" className="brand-logo" width={36} height={36} />
+                </span>
                 <span>
                   <span className="brand-name">Guía San Juan</span>
-                  <span className="brand-sub">San Juan del Río, Qro.</span>
+                  <span className="brand-sub brand-sub--grad">San Juan del Río</span>
                 </span>
               </a>
               <p className="footer-blurb">
-                Una guía digital independiente para descubrir, vivir y conectar con San Juan del Río.
-                Empezamos con la Feria 2026 y seguimos creciendo, paso a paso.
+                Hecha por y para los sanjuanenses. Toda la información de San Juan del Río en un solo lugar.
               </p>
+              <span className="footer-coords">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="3" />
+                </svg>
+                20°23′ N · 100°00′ O
+              </span>
             </div>
-            <div className="footer-col">
-              <h4>Explora</h4>
+            <nav className="footer-nav" aria-label="Secciones del sitio">
+              <h4 className="footer-nav-label">Explora</h4>
               <ul>
                 <li><a href="https://guiaferiasjr.vercel.app">Feria San Juan 2026</a></li>
                 <li><a href="#proyecto">El proyecto</a></li>
                 <li><a href="#pronto">Muy pronto</a></li>
               </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Contacto</h4>
-              <ul>
-                <li><a href="mailto:hola@trinium.mx">hola@trinium.mx</a></li>
-              </ul>
+            </nav>
+            <div className="footer-right">
+              <p className="footer-by">Un proyecto de</p>
+              <a
+                className="footer-trinium"
+                href="https://trinium.com.mx"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                TRINIUM
+              </a>
+              <a
+                className="footer-cta"
+                href="https://wa.me/524271000100?text=Hola%2C%20vi%20Gu%C3%ADa%20San%20Juan%20y%20me%20interesa%20una%20p%C3%A1gina%20similar%20para%20mi%20negocio."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8 12.27C8.14 12.44 9.76 14.94 12.25 16C12.84 16.27 13.3 16.42 13.66 16.53C14.25 16.72 14.79 16.69 15.22 16.63C15.7 16.56 16.68 16.03 16.89 15.45C17.1 14.87 17.1 14.37 17.04 14.27C16.97 14.17 16.81 14.1 16.56 13.98C16.31 13.86 15.09 13.26 14.87 13.18C14.64 13.1 14.5 13.06 14.31 13.31C14.13 13.56 13.67 14.1 13.53 14.27C13.38 14.44 13.24 14.46 13 14.34C12.74 14.22 11.94 13.96 11 13.12C10.26 12.47 9.77 11.67 9.62 11.42C9.48 11.17 9.61 11.04 9.73 10.92C9.84 10.81 9.98 10.63 10.1 10.48C10.21 10.34 10.25 10.23 10.33 10.07C10.41 9.9 10.37 9.76 10.31 9.64C10.25 9.52 9.77 8.3 9.56 7.81C9.36 7.34 9.16 7.4 9 7.39C8.86 7.39 8.7 7.33 8.53 7.33Z"/>
+                </svg>
+                Quiero una página así
+              </a>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>No somos sitio oficial del Ayuntamiento ni del Patronato de Feria. Iniciativa independiente creada por Trinium.</p>
-            <span className="made">© 2026 Guía San Juan · Hecho con 💙 por <a href="https://trinium.com.mx/" target="_blank" rel="noopener noreferrer"><b>Trinium</b></a></span>
+            <span className="footer-copy">© 2026 Guía San Juan · Proyecto ciudadano no oficial</span>
+            <span className="made">Hecho con <span className="heart" aria-hidden="true">♥</span> por <a href="https://trinium.com.mx/" target="_blank" rel="noopener noreferrer"><b>TRINIUM</b></a></span>
           </div>
         </div>
       </footer>
