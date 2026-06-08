@@ -1,4 +1,5 @@
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://guiasanjuan.mx';
@@ -90,6 +91,7 @@ export default function RootLayout({ children }) {
           if (_mood) document.documentElement.setAttribute('data-mood', _mood);
         `}</Script>
         {children}
+        <Analytics />
       </body>
     </html>
   );
