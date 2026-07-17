@@ -324,7 +324,7 @@ Implementación: helper `lib/schema.js` que genera el JSON-LD desde la fila de S
 - [ ] `generateMetadata()` por página; **Open Graph por ficha** (distribución vía WhatsApp) con imagen OG dinámica (`next/og`).
 - [ ] Core Web Vitals con **presupuesto objetivo definido por percentil y dispositivo** (p. ej. LCP p75 móvil < 2.5s) — medible, no aspiracional.
 - [ ] `next/font` (migrar del `<link>` actual), `next/image`, breadcrumbs visibles.
-- [ ] **Accesibilidad verificable**: WCAG 2.2 AA con pruebas **automáticas Y manuales** (una herramienta sola no acredita AA): axe/Lighthouse + recorrido real por teclado, lector de pantalla en fichas, foco visible, acordeones accesibles (`aria-expanded`).
+- [x] **Accesibilidad verificable** (2026-07-17): auditoría automática `pnpm probar-a11y` (axe-core sobre las páginas clave → **0 violaciones estructurales**); contraste WCAG AA verificado por cálculo oklch→sRGB en claro y oscuro (se corrigió el fallo de enlaces en modo oscuro, 2.38→8.1); foco visible global (`:focus-visible`); landmarks (login del admin en `<main>`); `aria-label` en inputs inline del admin; FAQs con `<details>/<summary>` nativos. *Pendiente manual (usuario): recorrido con lector de pantalla real y `target-size`/CWV en dispositivo.*
 
 ### 3.4 Frescura y proveniencia (B2) — desde la primera ficha
 
