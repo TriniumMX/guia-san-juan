@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { supabase } from '../../../lib/supabase';
 import FichaShell from '../../../components/FichaShell';
 import DisclaimerOficial from '../../../components/DisclaimerOficial';
+import ReportarDato from '../../../components/ReportarDato';
 import { DIAS, GRUPO_LABEL, fechaLarga, frescura } from '../../../lib/contenido';
 import { dependenciaSchema, breadcrumbList } from '../../../lib/schema';
 
@@ -130,6 +131,8 @@ export default async function DependenciaPage({ params }) {
             </ul>
           </section>
         )}
+
+        <ReportarDato tipo="dependencia" id={dep.id} />
       </article>
     </FichaShell>
   );

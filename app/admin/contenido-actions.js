@@ -461,3 +461,17 @@ export async function desvincularTramiteGuia(fd) {
   if (error) throw error;
   revalidatePath(`/admin/guias/${guia_id}`);
 }
+
+// ============================================================
+// REPORTES CIUDADANOS
+// ============================================================
+export async function marcarReporteAtendido(fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const tipo = s(fd, 'tipo'); const reporte_id = s(fd, 'reporte_id');
+  const TABLA = { tramite: 'tramite_reportes', dependencia: 'dependencia_reportes', directorio: 'directorio_reportes' };
+  if (!TABLA[tipo] || !reporte_id) throw new Error('Datos inválidos');
+  const { error } = await supabaseAdmin.from(TABLA[tipo]).update({ atendido: true }).eq('id', reporte_id);
+  if (error) throw error;
+  await registrarBitacora(admin.id, 'atender_reporte', tipo, reporte_id, null);
+  revalidatePath('/admin/verificacion');
+}

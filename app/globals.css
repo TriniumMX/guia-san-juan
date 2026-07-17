@@ -1766,3 +1766,12 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 
 /* Aviso de antigüedad en fichas (§3.4) */
 .ficha-frescura-aviso { margin: 12px 0 0; padding: 10px 14px; border-radius: 10px; background: oklch(0.8 0.14 55 / 0.14); color: oklch(0.5 0.14 45); font-size: 14.5px; font-weight: 500; }
+
+/* Reporte ciudadano en fichas (§3.4) */
+.reportar { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--line); }
+.reportar-toggle { background: none; border: none; color: var(--accent-deep); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+.reportar-toggle:hover { color: var(--ink); }
+.reportar-form { display: flex; flex-direction: column; gap: 12px; max-width: 520px; }
+.reportar-acciones { display: flex; gap: 10px; justify-content: flex-end; }
+.reportar-acciones .btn { min-height: 44px; }
+.reportar--ok { color: oklch(0.5 0.12 150); font-weight: 600; }

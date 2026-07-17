@@ -3,6 +3,7 @@ import { supabase } from '../../../lib/supabase';
 import FichaShell from '../../../components/FichaShell';
 import DisclaimerOficial from '../../../components/DisclaimerOficial';
 import Markdown from '../../../components/Markdown';
+import ReportarDato from '../../../components/ReportarDato';
 import { DIAS, GRUPO_LABEL, fechaLarga, frescura, importeTexto } from '../../../lib/contenido';
 import { tramiteSchema, breadcrumbList } from '../../../lib/schema';
 
@@ -194,6 +195,8 @@ export default async function TramitePage({ params }) {
             ))}
           </section>
         )}
+
+        <ReportarDato tipo="tramite" id={tramite.id} />
       </article>
     </FichaShell>
   );
