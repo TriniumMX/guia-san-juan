@@ -85,6 +85,7 @@ html[data-mood="oscuro"] {
   --ink:       oklch(0.96 0.008 260);
   --ink-2:     oklch(0.82 0.012 258);
   --muted:     oklch(0.66 0.016 258);
+  --accent-deep: oklch(0.74 0.11 258);   /* claro para texto/enlaces sobre fondo oscuro (WCAG AA) */
   --accent-soft: oklch(0.30 0.05 255);
   --shadow:    0 1px 2px oklch(0 0 0 / 0.35), 0 10px 30px oklch(0 0 0 / 0.40);
   --shadow-lg: 0 2px 6px oklch(0 0 0 / 0.40), 0 24px 60px oklch(0 0 0 / 0.55);
@@ -171,7 +172,7 @@ html[data-mood="oscuro"] .eyebrow::before { background: oklch(from var(--accent)
   color: var(--on-accent);
   box-shadow: 0 6px 20px oklch(from var(--accent) l c h / 0.35);
 }
-.btn--primary:hover { background: var(--accent-deep); box-shadow: 0 10px 28px oklch(from var(--accent) l c h / 0.45); }
+.btn--primary:hover { background: oklch(from var(--accent) calc(l - 0.09) c h); box-shadow: 0 10px 28px oklch(from var(--accent) l c h / 0.45); }
 
 .btn--ghost {
   background: transparent;
@@ -1563,7 +1564,7 @@ html[data-mood="oscuro"] .prop-badge--rechazada { background: oklch(0.55 0.15 25
   background: var(--accent); color: var(--on-accent);
   box-shadow: 0 4px 14px oklch(from var(--accent) l c h / 0.30);
 }
-.btn-action--approve:hover { background: var(--accent-deep); box-shadow: 0 8px 22px oklch(from var(--accent) l c h / 0.40); }
+.btn-action--approve:hover { background: oklch(from var(--accent) calc(l - 0.09) c h); box-shadow: 0 8px 22px oklch(from var(--accent) l c h / 0.40); }
 
 .btn-action--reject {
   background: transparent; color: oklch(0.44 0.15 25);
@@ -1775,3 +1776,7 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 .reportar-acciones { display: flex; gap: 10px; justify-content: flex-end; }
 .reportar-acciones .btn { min-height: 44px; }
 .reportar--ok { color: oklch(0.5 0.12 150); font-weight: 600; }
+
+/* Foco visible global (WCAG 2.4.7 / 2.4.11 AA) */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+.pf-field:focus, .pf-field:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px oklch(from var(--accent) l c h / 0.22); }

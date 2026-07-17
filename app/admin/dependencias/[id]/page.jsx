@@ -68,9 +68,9 @@ export default async function EditarDependenciaPage({ params }) {
           )}
           <form action={agregarTelefonoDependencia} className="admin-inline admin-inline--wrap">
             <input type="hidden" name="dependencia_id" value={dep.id} />
-            <input name="numero" className="pf-field" placeholder="Número" required />
-            <input name="extension" className="pf-field" placeholder="Ext." style={{ maxWidth: 90 }} />
-            <input name="etiqueta" className="pf-field" placeholder="Etiqueta (ej. Recepción)" />
+            <input name="numero" aria-label="Número de teléfono" className="pf-field" placeholder="Número" required />
+            <input name="extension" aria-label="Extensión" className="pf-field" placeholder="Ext." style={{ maxWidth: 90 }} />
+            <input name="etiqueta" aria-label="Etiqueta" className="pf-field" placeholder="Etiqueta (ej. Recepción)" />
             <button className="btn btn--ghost" type="submit">Agregar teléfono</button>
           </form>
         </section>
@@ -97,8 +97,8 @@ export default async function EditarDependenciaPage({ params }) {
             <select name="dia_semana" className="pf-field" style={{ maxWidth: 150 }}>
               {DIAS.map((d, i) => <option key={i} value={i}>{d}</option>)}
             </select>
-            <input name="abre" type="time" className="pf-field" style={{ maxWidth: 130 }} required />
-            <input name="cierra" type="time" className="pf-field" style={{ maxWidth: 130 }} required />
+            <input name="abre" aria-label="Hora de apertura" type="time" className="pf-field" style={{ maxWidth: 130 }} required />
+            <input name="cierra" aria-label="Hora de cierre" type="time" className="pf-field" style={{ maxWidth: 130 }} required />
             <button className="btn btn--ghost" type="submit">Agregar horario</button>
           </form>
         </section>
@@ -121,11 +121,11 @@ export default async function EditarDependenciaPage({ params }) {
           )}
           <form action={agregarExcepcionDependencia} className="admin-inline admin-inline--wrap">
             <input type="hidden" name="dependencia_id" value={dep.id} />
-            <input name="fecha" type="date" className="pf-field" style={{ maxWidth: 170 }} required />
+            <input name="fecha" aria-label="Fecha" type="date" className="pf-field" style={{ maxWidth: 170 }} required />
             <label className="admin-check"><input type="checkbox" name="cerrado" defaultChecked /> Cerrado</label>
-            <input name="abre" type="time" className="pf-field" style={{ maxWidth: 120 }} />
-            <input name="cierra" type="time" className="pf-field" style={{ maxWidth: 120 }} />
-            <input name="motivo" className="pf-field" placeholder="Motivo (ej. Día festivo)" />
+            <input name="abre" aria-label="Hora de apertura" type="time" className="pf-field" style={{ maxWidth: 120 }} />
+            <input name="cierra" aria-label="Hora de cierre" type="time" className="pf-field" style={{ maxWidth: 120 }} />
+            <input name="motivo" aria-label="Motivo" className="pf-field" placeholder="Motivo (ej. Día festivo)" />
             <button className="btn btn--ghost" type="submit">Agregar excepción</button>
           </form>
         </section>

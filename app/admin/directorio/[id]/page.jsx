@@ -60,9 +60,9 @@ export default async function EditarDirectorioPage({ params }) {
           )}
           <form action={agregarTelefonoDirectorio} className="admin-inline admin-inline--wrap">
             <input type="hidden" name="directorio_id" value={reg.id} />
-            <input name="numero" className="pf-field" placeholder="Número" required />
-            <input name="extension" className="pf-field" placeholder="Ext." style={{ maxWidth: 90 }} />
-            <input name="etiqueta" className="pf-field" placeholder="Etiqueta" />
+            <input name="numero" aria-label="Número de teléfono" className="pf-field" placeholder="Número" required />
+            <input name="extension" aria-label="Extensión" className="pf-field" placeholder="Ext." style={{ maxWidth: 90 }} />
+            <input name="etiqueta" aria-label="Etiqueta" className="pf-field" placeholder="Etiqueta" />
             <button className="btn btn--ghost" type="submit">Agregar teléfono</button>
           </form>
         </section>

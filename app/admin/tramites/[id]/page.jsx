@@ -96,7 +96,7 @@ export default async function EditarTramitePage({ params }) {
           )}
           <form action={agregarCostoTramite} className="admin-inline admin-inline--wrap">
             <input type="hidden" name="tramite_id" value={t.id} />
-            <input name="concepto" className="pf-field" placeholder="Concepto" required />
+            <input name="concepto" aria-label="Concepto del costo" className="pf-field" placeholder="Concepto" required />
             <select name="categoria" className="pf-field" style={{ maxWidth: 150 }}>
               <option value="derecho">derecho</option><option value="honorario">honorario</option>
               <option value="gasto">gasto</option><option value="otro">otro</option>
@@ -105,8 +105,8 @@ export default async function EditarTramitePage({ params }) {
               <option value="fijo">fijo</option><option value="rango">rango</option>
               <option value="desde">desde</option><option value="desconocido">desconocido</option>
             </select>
-            <input name="importe_min" className="pf-field" placeholder="Mín." style={{ maxWidth: 100 }} inputMode="decimal" />
-            <input name="importe_max" className="pf-field" placeholder="Máx." style={{ maxWidth: 100 }} inputMode="decimal" />
+            <input name="importe_min" aria-label="Importe mínimo" className="pf-field" placeholder="Mín." style={{ maxWidth: 100 }} inputMode="decimal" />
+            <input name="importe_max" aria-label="Importe máximo" className="pf-field" placeholder="Máx." style={{ maxWidth: 100 }} inputMode="decimal" />
             <button className="btn btn--ghost" type="submit">Agregar costo</button>
           </form>
         </section>

@@ -6,7 +6,7 @@ export default function LoginPage() {
   const [state, action, pending] = useActionState(loginAction, null);
 
   return (
-    <div className="admin-login-wrap">
+    <main className="admin-login-wrap">
       <div className="admin-login-card">
         <div className="admin-login-brand">
           <span className="brand-mark" style={{ width: 48, height: 48, fontSize: 22 }}>G</span>
@@ -53,6 +53,6 @@ export default function LoginPage() {
           </button>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
