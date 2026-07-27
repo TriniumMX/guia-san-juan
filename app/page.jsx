@@ -75,6 +75,8 @@ export default function Home() {
             </span>
           </a>
           <nav className="nav-links" aria-label="Secciones">
+            <a className="navlink" href="/tramites">Trámites</a>
+            <a className="navlink" href="/directorio">Directorio</a>
             <a className="navlink" href="#proyecto">El proyecto</a>
             <a className="navlink" href="#pronto">Muy pronto</a>
           </nav>
@@ -151,6 +153,48 @@ export default function Home() {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* TRÁMITES Y SERVICIOS — accesos directos al contenido real */}
+        <section className="section" id="tramites-servicios" aria-label="Trámites y servicios">
+          <div className="wrap">
+            <div className="sec-head reveal">
+              <span className="eyebrow">Trámites y servicios</span>
+              <h2>Resuelve tu trámite sin dar vueltas</h2>
+              <p className="lead">
+                Consulta el catálogo de trámites municipales o encuentra el teléfono de la dependencia
+                que necesitas. Información verificada, clara y en un solo lugar.
+              </p>
+            </div>
+            <div className="accesos-grid">
+              <a className="acceso" href="/tramites">
+                <span className="acceso-ico">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2" />
+                    <rect x="8" y="2" width="8" height="4" rx="1" />
+                    <path d="M9 12h6M9 16h4" />
+                  </svg>
+                </span>
+                <span className="acceso-txt">
+                  <b>Trámites</b>
+                  <span>Consulta requisitos, costos y a dónde ir para cada trámite municipal.</span>
+                </span>
+                <span className="acceso-arrow" aria-hidden="true">→</span>
+              </a>
+              <a className="acceso" href="/directorio">
+                <span className="acceso-ico">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.1 9.5a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z" />
+                  </svg>
+                </span>
+                <span className="acceso-txt">
+                  <b>Directorio</b>
+                  <span>Teléfonos y datos de contacto de las dependencias.</span>
+                </span>
+                <span className="acceso-arrow" aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
         </section>
@@ -350,6 +394,8 @@ export default function Home() {
               <h4 className="footer-nav-label">Explora</h4>
               <ul>
                 <li><a href="#top">Inicio</a></li>
+                <li><a href="/tramites">Trámites</a></li>
+                <li><a href="/directorio">Directorio</a></li>
                 <li><a href="#proyecto">El proyecto</a></li>
                 <li><a href="#pronto">Muy pronto</a></li>
               </ul>

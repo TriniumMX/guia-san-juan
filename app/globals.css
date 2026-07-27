@@ -527,6 +527,48 @@ html[data-mood="oscuro"] .feature .ficon { background: oklch(from var(--cat) 0.2
 @media (max-width: 540px) { .card-grid { grid-template-columns: 1fr; } }
 
 /* ============================================================
+   Accesos directos (Trámites y servicios) — tarjetas enlace
+   ============================================================ */
+.accesos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 52px;
+}
+.acceso {
+  --cat: oklch(0.56 0.14 255);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-lg);
+  padding: 26px 28px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.acceso:nth-child(2) { --cat: oklch(0.56 0.12 155); }  /* verde */
+.acceso:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: oklch(from var(--cat) l c h / 0.45); }
+.acceso-ico {
+  flex: none;
+  width: 50px; height: 50px; border-radius: 14px;
+  background: oklch(from var(--cat) 0.93 0.05 h);
+  color: oklch(from var(--cat) 0.52 0.12 h);
+  display: grid; place-items: center;
+  transition: transform 0.3s cubic-bezier(.2,.7,.2,1);
+}
+.acceso:hover .acceso-ico { transform: translateY(-2px) rotate(-4deg) scale(1.06); }
+html[data-mood="oscuro"] .acceso-ico { background: oklch(from var(--cat) 0.26 0.07 h); color: oklch(from var(--cat) 0.88 0.16 h); }
+.acceso-txt { flex: 1; min-width: 0; }
+.acceso-txt b { display: block; font-size: 20px; color: var(--ink); }
+.acceso-txt span { display: block; font-size: 15px; color: var(--muted); margin-top: 5px; }
+.acceso-arrow { flex: none; font-size: 22px; color: var(--accent); transition: transform 0.25s ease; }
+.acceso:hover .acceso-arrow { transform: translateX(4px); }
+
+@media (max-width: 620px) { .accesos-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
    Muy pronto — grid
    ============================================================ */
 .band--soft { background: var(--bg-alt); }
