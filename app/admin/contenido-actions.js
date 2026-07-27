@@ -97,12 +97,10 @@ export async function actualizarDependencia(prevState, fd) {
 }
 
 // Geocodifica una dirección con OpenStreetMap/Nominatim (sin API key, del lado del
-// servidor: no expone nada al navegador ni requiere relajar la CSP del admin). Solo
-// lectura; no escribe ni registra bitácora. La rellena el admin desde el formulario.
-export async function geocodificarDireccion(direccion) {
-  await requireAdmin();
+// servidor). Devuelve { lat, lng } o null. Helper interno (no server action).
+async function geocodeNominatim(direccion) {
   const q = String(direccion ?? '').trim();
-  if (q.length < 4) return { error: 'Escribe primero la dirección.' };
+  if (q.length < 4) return null;
   const url = 'https://nominatim.openstreetmap.org/search?' + new URLSearchParams({
     q: `${q}, San Juan del Río, Querétaro, México`,
     format: 'json', limit: '1', countrycodes: 'mx',
@@ -111,19 +109,35 @@ export async function geocodificarDireccion(direccion) {
     const r = await fetch(url, {
       headers: { 'User-Agent': 'GuiaSanJuan/1.0 (hola@trinium.mx)', 'Accept-Language': 'es' },
     });
-    if (!r.ok) return { error: 'El servicio de mapas no respondió. Intenta de nuevo.' };
+    if (!r.ok) return null;
     const arr = await r.json();
-    if (!Array.isArray(arr) || arr.length === 0) {
-      return { error: 'No encontramos esa dirección. Ajusta el texto o captura las coordenadas a mano.' };
-    }
+    if (!Array.isArray(arr) || arr.length === 0) return null;
     const lat = Number(arr[0].lat), lng = Number(arr[0].lon);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-      return { error: 'Respuesta inválida del servicio de mapas.' };
-    }
-    return { ok: true, lat, lng, etiqueta: String(arr[0].display_name ?? '') };
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    return { lat, lng };
   } catch {
-    return { error: 'No se pudo contactar el servicio de mapas.' };
+    return null;
   }
+}
+
+// Server action (POST nativo, sin JS de cliente): lee la dirección guardada de la
+// dependencia, la geocodifica y guarda lat/lng. Redirige con ?geo=<estado> para
+// mostrar el resultado en la página.
+export async function geocodificarYGuardarDependencia(fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const id = s(fd, 'dependencia_id');
+  if (!id) throw new Error('Falta el id de la dependencia');
+  const { data: dep } = await supabaseAdmin.from('dependencias').select('direccion').eq('id', id).single();
+  const dir = String(dep?.direccion ?? '').trim();
+  if (dir.length < 4) redirect(`/admin/dependencias/${id}?geo=sindir`);
+  const punto = await geocodeNominatim(dir);
+  if (!punto) redirect(`/admin/dependencias/${id}?geo=notfound`);
+  const { error } = await supabaseAdmin.from('dependencias')
+    .update({ lat: punto.lat, lng: punto.lng, actualizado_en: new Date().toISOString() })
+    .eq('id', id);
+  if (error) redirect(`/admin/dependencias/${id}?geo=error`);
+  await registrarBitacora(admin.id, 'geocodificar', 'dependencias', id, punto);
+  redirect(`/admin/dependencias/${id}?geo=ok`);
 }
 
 export async function cambiarEstadoDependencia(prevState, fd) {

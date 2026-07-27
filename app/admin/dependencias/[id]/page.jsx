@@ -8,7 +8,15 @@ import {
   agregarTelefonoDependencia, eliminarTelefonoDependencia,
   agregarHorarioDependencia, eliminarHorarioDependencia,
   agregarExcepcionDependencia, eliminarExcepcionDependencia,
+  geocodificarYGuardarDependencia,
 } from '../../contenido-actions';
+
+const GEO_MSG = {
+  ok: { clase: 'admin-ok', texto: '✓ Coordenadas actualizadas desde la dirección.' },
+  notfound: { clase: 'pf-file-err', texto: 'No encontramos la dirección en el mapa. Ajusta el texto o captura las coordenadas a mano.' },
+  sindir: { clase: 'pf-file-err', texto: 'Primero captura y guarda la dirección.' },
+  error: { clase: 'pf-file-err', texto: 'No se pudieron guardar las coordenadas. Intenta de nuevo.' },
+};
 import { DIAS } from '../../../../lib/contenido';
 
 export const dynamic = 'force-dynamic';
@@ -20,8 +28,10 @@ function fecha(iso) {
   return iso ? new Date(iso).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
 }
 
-export default async function EditarDependenciaPage({ params }) {
+export default async function EditarDependenciaPage({ params, searchParams }) {
   const { id } = await params;
+  const { geo } = (await searchParams) || {};
+  const geoMsg = GEO_MSG[geo];
   const { data: dep } = await supabaseAdmin.from('dependencias').select('*').eq('id', id).single();
   if (!dep) notFound();
 
@@ -49,6 +59,24 @@ export default async function EditarDependenciaPage({ params }) {
         <section className="admin-section">
           <h2 className="admin-section-title">Datos</h2>
           <DependenciaForm dependencia={dep} />
+        </section>
+
+        <section className="admin-section">
+          <h2 className="admin-section-title">Coordenadas del mapa</h2>
+          <p className="admin-muted">
+            Opcional. La dirección basta para el botón “Cómo llegar”; las coordenadas solo dan un pin más preciso.
+            Guarda primero la dirección y luego búscalas automáticamente (OpenStreetMap).
+          </p>
+          {geoMsg && <p className={geoMsg.clase}>{geoMsg.texto}</p>}
+          <p className="admin-muted admin-mono">
+            {dep.lat != null && dep.lng != null ? `Actuales: ${dep.lat}, ${dep.lng}` : 'Sin coordenadas.'}
+          </p>
+          <form action={geocodificarYGuardarDependencia}>
+            <input type="hidden" name="dependencia_id" value={dep.id} />
+            <button className="btn btn--ghost" type="submit" disabled={!dep.direccion}>
+              Buscar y guardar coordenadas desde la dirección
+            </button>
+          </form>
         </section>
 
         <section className="admin-section">
