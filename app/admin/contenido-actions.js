@@ -316,12 +316,13 @@ function diaValido(v) { const n = Number(v); return Number.isInteger(n) && n >= 
 export async function agregarHorarioDependencia(fd) {
   const { admin } = await requireAdmin({ escritura: true });
   const dependencia_id = s(fd, 'dependencia_id');
-  const dia = diaValido(s(fd, 'dia_semana'));
   const abre = s(fd, 'abre'); const cierra = s(fd, 'cierra');
-  if (!dependencia_id || dia == null || !abre || !cierra) throw new Error('Datos de horario incompletos');
-  const { error } = await supabaseAdmin.from('dependencia_horarios').insert({ dependencia_id, dia_semana: dia, abre, cierra });
+  const dias = [...new Set(fd.getAll('dias').map((v) => diaValido(String(v))).filter((d) => d != null))];
+  if (!dependencia_id || dias.length === 0 || !abre || !cierra) throw new Error('Datos de horario incompletos');
+  const filas = dias.map((dia) => ({ dependencia_id, dia_semana: dia, abre, cierra }));
+  const { error } = await supabaseAdmin.from('dependencia_horarios').insert(filas);
   if (error) throw error;
-  await registrarBitacora(admin.id, 'agregar_horario', 'dependencias', dependencia_id, { dia, abre, cierra });
+  await registrarBitacora(admin.id, 'agregar_horario', 'dependencias', dependencia_id, { dias, abre, cierra });
   revalidatePath(`/admin/dependencias/${dependencia_id}`);
 }
 

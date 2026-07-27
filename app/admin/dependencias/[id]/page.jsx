@@ -14,6 +14,7 @@ import { DIAS } from '../../../../lib/contenido';
 export const dynamic = 'force-dynamic';
 
 const GRUPOS_DEP = ['contacto', 'ubicacion', 'horarios'];
+const DIAS_ABREV = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
 function fecha(iso) {
   return iso ? new Date(iso).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
@@ -77,7 +78,7 @@ export default async function EditarDependenciaPage({ params }) {
 
         <section className="admin-section">
           <h2 className="admin-section-title">Horarios</h2>
-          <p className="admin-muted">Editar horarios invalida la verificación del grupo <b>horarios</b> (y se refleja en los trámites que la consumen).</p>
+          <p className="admin-muted">Editar horarios invalida la verificación del grupo <b>horarios</b> (y se refleja en los trámites que la consumen). Marca varios días para agregarlos con el mismo horario; para un turno partido, agrega otra franja.</p>
           {horarios.length === 0 ? <p className="admin-muted">Sin horarios.</p> : (
             <ul className="admin-list">
               {horarios.map((h) => (
@@ -94,12 +95,16 @@ export default async function EditarDependenciaPage({ params }) {
           )}
           <form action={agregarHorarioDependencia} className="admin-inline admin-inline--wrap">
             <input type="hidden" name="dependencia_id" value={dep.id} />
-            <select name="dia_semana" className="pf-field" style={{ maxWidth: 150 }}>
-              {DIAS.map((d, i) => <option key={i} value={i}>{d}</option>)}
-            </select>
+            <div className="admin-dias" role="group" aria-label="Días">
+              {DIAS_ABREV.map((d, i) => (
+                <label key={i} className="admin-check">
+                  <input type="checkbox" name="dias" value={i} defaultChecked={i >= 1 && i <= 5} /> {d}
+                </label>
+              ))}
+            </div>
             <input name="abre" aria-label="Hora de apertura" type="time" className="pf-field" style={{ maxWidth: 130 }} required />
             <input name="cierra" aria-label="Hora de cierre" type="time" className="pf-field" style={{ maxWidth: 130 }} required />
-            <button className="btn btn--ghost" type="submit">Agregar horario</button>
+            <button className="btn btn--ghost" type="submit">Agregar horario(s)</button>
           </form>
         </section>
 
