@@ -17,6 +17,12 @@ const FUENTE_TIPOS = ['web', 'telefono', 'presencial', 'documento_oficial'];
 const s = (fd, k) => String(fd.get(k) ?? '').trim();
 const nulo = (v) => (v === '' ? null : v);
 const numero = (v) => (v === '' || v == null ? null : Number(v));
+// Coordenada válida o null: descarta vacío, NaN y fuera de rango.
+const coord = (v, max) => {
+  if (v === '' || v == null) return null;
+  const n = Number(v);
+  return Number.isFinite(n) && Math.abs(n) <= max ? n : null;
+};
 
 // Slug: minúsculas, sin acentos, guiones. Inmutable una vez publicado (se valida en UI).
 function slugify(txt) {
@@ -67,7 +73,7 @@ export async function actualizarDependencia(prevState, fd) {
     nombre,
     descripcion: nulo(s(fd, 'descripcion')),
     direccion: nulo(s(fd, 'direccion')),
-    lat: numero(s(fd, 'lat')), lng: numero(s(fd, 'lng')),
+    lat: coord(s(fd, 'lat'), 90), lng: coord(s(fd, 'lng'), 180),
     email: nulo(s(fd, 'email')), sitio_oficial_url: nulo(s(fd, 'sitio_oficial_url')),
     actualizado_en: new Date().toISOString(),
   }).eq('id', id);
@@ -76,6 +82,36 @@ export async function actualizarDependencia(prevState, fd) {
   await registrarBitacora(admin.id, 'actualizar', 'dependencias', id, null);
   revalidatePath(`/admin/dependencias/${id}`);
   return { ok: true };
+}
+
+// Geocodifica una dirección con OpenStreetMap/Nominatim (sin API key, del lado del
+// servidor: no expone nada al navegador ni requiere relajar la CSP del admin). Solo
+// lectura; no escribe ni registra bitácora. La rellena el admin desde el formulario.
+export async function geocodificarDireccion(direccion) {
+  await requireAdmin();
+  const q = String(direccion ?? '').trim();
+  if (q.length < 4) return { error: 'Escribe primero la dirección.' };
+  const url = 'https://nominatim.openstreetmap.org/search?' + new URLSearchParams({
+    q: `${q}, San Juan del Río, Querétaro, México`,
+    format: 'json', limit: '1', countrycodes: 'mx',
+  });
+  try {
+    const r = await fetch(url, {
+      headers: { 'User-Agent': 'GuiaSanJuan/1.0 (hola@trinium.mx)', 'Accept-Language': 'es' },
+    });
+    if (!r.ok) return { error: 'El servicio de mapas no respondió. Intenta de nuevo.' };
+    const arr = await r.json();
+    if (!Array.isArray(arr) || arr.length === 0) {
+      return { error: 'No encontramos esa dirección. Ajusta el texto o captura las coordenadas a mano.' };
+    }
+    const lat = Number(arr[0].lat), lng = Number(arr[0].lon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      return { error: 'Respuesta inválida del servicio de mapas.' };
+    }
+    return { ok: true, lat, lng, etiqueta: String(arr[0].display_name ?? '') };
+  } catch {
+    return { error: 'No se pudo contactar el servicio de mapas.' };
+  }
 }
 
 export async function cambiarEstadoDependencia(prevState, fd) {
