@@ -73,6 +73,12 @@ export default async function TramitePage({ params }) {
   const requisitos = (Array.isArray(tramite.requisitos) ? tramite.requisitos : [])
     .map((r) => (typeof r === 'string' ? { titulo: r } : r))
     .filter((r) => r && r.titulo);
+  const documentos = (Array.isArray(tramite.documentos) ? tramite.documentos : [])
+    .filter((d) => d && d.ruta && d.etiqueta)
+    .map((d) => ({
+      ...d,
+      url: supabase.storage.from('formatos').getPublicUrl(d.ruta, { download: `${d.etiqueta}.pdf` }).data.publicUrl,
+    }));
   const faqs = Array.isArray(tramite.faqs) ? tramite.faqs : [];
   const waMsg = encodeURIComponent(`Hola, quiero información sobre el trámite: ${tramite.nombre}.`);
 
@@ -120,6 +126,25 @@ export default async function TramitePage({ params }) {
                 <li key={i}>
                   <span className="req-titulo">{r.titulo}</span>
                   {r.detalle && <span className="req-detalle">{r.detalle}</span>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {documentos.length > 0 && (
+          <section className="ficha-sec">
+            <h2>Formatos descargables</h2>
+            <ul className="formatos-lista">
+              {documentos.map((d) => (
+                <li key={d.ruta}>
+                  <a className="formato-item" href={d.url}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M12 12v6M9 15l3 3 3-3" />
+                    </svg>
+                    <span className="formato-nombre">{d.etiqueta}</span>
+                    <span className="formato-meta">PDF{d.size ? ` · ${d.size < 1048576 ? Math.round(d.size / 1024) + ' KB' : (d.size / 1048576).toFixed(1) + ' MB'}` : ''}</span>
+                  </a>
                 </li>
               ))}
             </ul>

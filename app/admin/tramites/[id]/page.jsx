@@ -5,11 +5,25 @@ import TramiteForm from '../../TramiteForm';
 import EstadoControl from '../../EstadoControl';
 import CtaControl from '../../CtaControl';
 import VerificacionForm from '../../VerificacionForm';
-import { agregarCostoTramite, eliminarCostoTramite, agregarRequisitoTramite, eliminarRequisitoTramite } from '../../contenido-actions';
+import { agregarCostoTramite, eliminarCostoTramite, agregarRequisitoTramite, eliminarRequisitoTramite, agregarFormatoTramite, eliminarFormatoTramite } from '../../contenido-actions';
 
 export const dynamic = 'force-dynamic';
 
 const GRUPOS_TRAMITE = ['requisitos', 'costos', 'contacto', 'ubicacion', 'horarios_propios', 'representacion'];
+
+const FMT_MSG = {
+  ok: { clase: 'admin-ok', texto: '✓ Formato subido.' },
+  sinnombre: { clase: 'pf-file-err', texto: 'Escribe un nombre para el formato.' },
+  sinarchivo: { clase: 'pf-file-err', texto: 'Elige un archivo PDF.' },
+  tipo: { clase: 'pf-file-err', texto: 'El archivo debe ser un PDF válido.' },
+  grande: { clase: 'pf-file-err', texto: 'El PDF supera el límite de 10 MB.' },
+  error: { clase: 'pf-file-err', texto: 'No se pudo subir el formato. Intenta de nuevo.' },
+};
+
+function pesoLegible(bytes) {
+  if (!bytes) return '';
+  return bytes < 1024 * 1024 ? `${Math.round(bytes / 1024)} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
 
 function fecha(iso) {
   return iso ? new Date(iso).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
@@ -20,8 +34,10 @@ function importe(c) {
   return `$${c.importe_min ?? c.importe_max}`;
 }
 
-export default async function EditarTramitePage({ params }) {
+export default async function EditarTramitePage({ params, searchParams }) {
   const { id } = await params;
+  const { fmt } = (await searchParams) || {};
+  const fmtMsg = FMT_MSG[fmt];
   const { data: t } = await supabaseAdmin.from('tramites').select('*').eq('id', id).single();
   if (!t) notFound();
 
@@ -38,6 +54,7 @@ export default async function EditarTramitePage({ params }) {
   const requisitos = (Array.isArray(t.requisitos) ? t.requisitos : [])
     .map((r) => (typeof r === 'string' ? { titulo: r } : r))
     .filter((r) => r && r.titulo);
+  const documentos = (Array.isArray(t.documentos) ? t.documentos : []).filter((d) => d && d.ruta && d.etiqueta);
 
   return (
     <AdminChrome>
@@ -93,6 +110,32 @@ export default async function EditarTramitePage({ params }) {
             <input name="titulo" aria-label="Nombre del requisito" className="pf-field" placeholder="Nombre del requisito (ej. Acta de nacimiento)" required />
             <textarea name="detalle" aria-label="Detalle del requisito" className="pf-field pf-textarea" placeholder="Detalle (opcional): especificaciones, cantidad, condiciones…" />
             <button className="btn btn--ghost" type="submit">Agregar requisito</button>
+          </form>
+        </section>
+
+        <section className="admin-section">
+          <h2 className="admin-section-title">Formatos descargables</h2>
+          <p className="admin-muted">Sube los formatos oficiales en PDF (en blanco) que la ciudadanía puede descargar e imprimir. Máx. 10 MB por archivo.</p>
+          {fmtMsg && <p className={fmtMsg.clase}>{fmtMsg.texto}</p>}
+          {documentos.length === 0 ? <p className="admin-muted">Sin formatos.</p> : (
+            <ul className="admin-list">
+              {documentos.map((d) => (
+                <li key={d.ruta} className="admin-list-row">
+                  <span><b>{d.etiqueta}</b> <span className="admin-muted">PDF{d.size ? ` · ${pesoLegible(d.size)}` : ''}</span></span>
+                  <form action={eliminarFormatoTramite}>
+                    <input type="hidden" name="tramite_id" value={t.id} />
+                    <input type="hidden" name="ruta" value={d.ruta} />
+                    <button className="admin-link admin-link--danger" type="submit">Quitar</button>
+                  </form>
+                </li>
+              ))}
+            </ul>
+          )}
+          <form action={agregarFormatoTramite} encType="multipart/form-data" className="req-add">
+            <input type="hidden" name="tramite_id" value={t.id} />
+            <input name="etiqueta" aria-label="Nombre del formato" className="pf-field" placeholder="Nombre visible (ej. Solicitud de licencia de funcionamiento)" required />
+            <input name="archivo" aria-label="Archivo PDF" type="file" accept="application/pdf" className="pf-field" required />
+            <button className="btn btn--ghost" type="submit">Subir formato</button>
           </form>
         </section>
 

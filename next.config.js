@@ -10,6 +10,11 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Los formatos PDF de trámites se suben por server action (admin); el default
+  // de 1MB no alcanza. El archivo real se limita a 10MB (validación + bucket).
+  experimental: {
+    serverActions: { bodySizeLimit: '12mb' },
+  },
   async headers() {
     return [
       {

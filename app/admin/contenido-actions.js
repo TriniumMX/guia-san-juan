@@ -1,4 +1,5 @@
 'use server';
+import { randomUUID } from 'crypto';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { supabaseAdmin } from '../../lib/supabase-admin';
@@ -279,6 +280,68 @@ export async function eliminarRequisitoTramite(fd) {
   if (error) throw error;
   await registrarBitacora(admin.id, 'eliminar_requisito', 'tramites', tramite_id, { indice });
   revalidatePath(`/admin/tramites/${tramite_id}`);
+}
+
+// Formatos descargables (PDF): se guardan en el bucket público `formatos` y su
+// referencia { etiqueta, ruta, size } en el jsonb `tramites.documentos`. Subida
+// por server action (POST nativo, sin JS de cliente).
+const MAX_PDF = 10 * 1024 * 1024; // 10 MB
+const normDocumentos = (v) =>
+  (Array.isArray(v) ? v : []).filter((d) => d && d.ruta && d.etiqueta);
+
+export async function agregarFormatoTramite(fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const tramite_id = s(fd, 'tramite_id');
+  const etiqueta = s(fd, 'etiqueta');
+  const archivo = fd.get('archivo');
+  if (!tramite_id) throw new Error('Falta el id del trámite');
+  const volver = (fmt) => redirect(`/admin/tramites/${tramite_id}?fmt=${fmt}`);
+  if (!etiqueta) volver('sinnombre');
+  if (!archivo || typeof archivo === 'string' || archivo.size === 0) volver('sinarchivo');
+  if (archivo.type !== 'application/pdf' || !/\.pdf$/i.test(archivo.name || '')) volver('tipo');
+  if (archivo.size > MAX_PDF) volver('grande');
+
+  const buffer = Buffer.from(await archivo.arrayBuffer());
+  // Magic bytes: un PDF real empieza con "%PDF-"
+  if (buffer.subarray(0, 5).toString('latin1') !== '%PDF-') volver('tipo');
+
+  const ruta = `${randomUUID()}.pdf`;
+  const up = await supabaseAdmin.storage.from('formatos').upload(ruta, buffer, {
+    contentType: 'application/pdf', upsert: false,
+  });
+  if (up.error) { console.error(up.error); volver('error'); }
+
+  const { data: t } = await supabaseAdmin.from('tramites').select('documentos, slug').eq('id', tramite_id).single();
+  const actuales = normDocumentos(t?.documentos);
+  const nuevo = { etiqueta, ruta, size: archivo.size };
+  const { error } = await supabaseAdmin.from('tramites')
+    .update({ documentos: [...actuales, nuevo], actualizado_en: new Date().toISOString() })
+    .eq('id', tramite_id);
+  if (error) {
+    await supabaseAdmin.storage.from('formatos').remove([ruta]); // no dejar huérfano
+    volver('error');
+  }
+  await registrarBitacora(admin.id, 'agregar_formato', 'tramites', tramite_id, { etiqueta, ruta });
+  revalidatePath(`/admin/tramites/${tramite_id}`);
+  if (t?.slug) revalidatePath(`/tramites/${t.slug}`);
+  volver('ok');
+}
+
+export async function eliminarFormatoTramite(fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const tramite_id = s(fd, 'tramite_id');
+  const ruta = s(fd, 'ruta');
+  if (!tramite_id || !ruta) throw new Error('Datos inválidos');
+  const { data: t } = await supabaseAdmin.from('tramites').select('documentos, slug').eq('id', tramite_id).single();
+  const restantes = normDocumentos(t?.documentos).filter((d) => d.ruta !== ruta);
+  const { error } = await supabaseAdmin.from('tramites')
+    .update({ documentos: restantes.length ? restantes : null, actualizado_en: new Date().toISOString() })
+    .eq('id', tramite_id);
+  if (error) throw error;
+  await supabaseAdmin.storage.from('formatos').remove([ruta]);
+  await registrarBitacora(admin.id, 'eliminar_formato', 'tramites', tramite_id, { ruta });
+  revalidatePath(`/admin/tramites/${tramite_id}`);
+  if (t?.slug) revalidatePath(`/tramites/${t.slug}`);
 }
 
 export async function cambiarEstadoTramite(prevState, fd) {

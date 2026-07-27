@@ -1713,6 +1713,14 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 .req-titulo { display: block; }
 .req-detalle { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; line-height: 1.5; white-space: pre-line; }
 
+/* Formatos descargables (ficha pública) */
+.formatos-lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.formato-item { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: inherit; transition: border-color 0.15s, background 0.15s; }
+.formato-item:hover { border-color: var(--accent); background: var(--bg-alt); }
+.formato-item svg { flex: none; color: var(--accent); }
+.formato-nombre { flex: 1; min-width: 0; font-weight: 600; }
+.formato-meta { flex: none; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+
 /* Alta de requisito (admin): título + detalle opcional, por server action */
 .req-add { display: flex; flex-direction: column; gap: 8px; align-items: stretch; max-width: 640px; }
 .req-add .pf-textarea { min-height: 56px; }
