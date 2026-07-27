@@ -25,6 +25,8 @@ const paginas = [
   ['/dependencias', 'Índice dependencias'],
   ['/directorio', 'Directorio'],
   ['/guias', 'Índice guías'],
+  ['/acerca-de', 'Acerca de'],
+  ['/terminos', 'Términos de uso'],
   ['/privacidad', 'Aviso de privacidad'],
   ['/admin/login', 'Admin login'],
   ...(tp ? [[`/tramites/${tp}`, 'Ficha de trámite']] : []),

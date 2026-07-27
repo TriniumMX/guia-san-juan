@@ -34,7 +34,7 @@ export default function FichaShell({ children }) {
             independiente del Gobierno Municipal. No es un sitio oficial.
           </p>
           <p className="ficha-footer-copy">
-            © 2026 Guía San Juan · Proyecto ciudadano no oficial · <a href="/privacidad">Aviso de privacidad</a>
+            © 2026 Guía San Juan · Proyecto ciudadano no oficial · <a href="/acerca-de">Acerca de</a> · <a href="/terminos">Términos</a> · <a href="/privacidad">Aviso de privacidad</a>
           </p>
         </div>
       </footer>
