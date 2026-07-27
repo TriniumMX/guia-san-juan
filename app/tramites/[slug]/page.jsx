@@ -70,7 +70,9 @@ export default async function TramitePage({ params }) {
     breadcrumbList([{ name: 'Inicio', path: '/' }, { name: 'Trámites', path: '/tramites' }, { name: tramite.nombre, path: `/tramites/${tramite.slug}` }]),
   ];
 
-  const requisitos = Array.isArray(tramite.requisitos) ? tramite.requisitos : [];
+  const requisitos = (Array.isArray(tramite.requisitos) ? tramite.requisitos : [])
+    .map((r) => (typeof r === 'string' ? { titulo: r } : r))
+    .filter((r) => r && r.titulo);
   const faqs = Array.isArray(tramite.faqs) ? tramite.faqs : [];
   const waMsg = encodeURIComponent(`Hola, quiero información sobre el trámite: ${tramite.nombre}.`);
 
@@ -114,7 +116,12 @@ export default async function TramitePage({ params }) {
           <section className="ficha-sec">
             <h2>Requisitos</h2>
             <ul className="ficha-checklist">
-              {requisitos.map((r, i) => <li key={i}>{r}</li>)}
+              {requisitos.map((r, i) => (
+                <li key={i}>
+                  <span className="req-titulo">{r.titulo}</span>
+                  {r.detalle && <span className="req-detalle">{r.detalle}</span>}
+                </li>
+              ))}
             </ul>
           </section>
         )}

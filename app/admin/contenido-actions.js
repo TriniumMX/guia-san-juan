@@ -192,8 +192,18 @@ export async function actualizarTramite(prevState, fd) {
   if (!id) return { error: 'Falta el id.' };
   if (!nombre) return { error: 'El nombre es obligatorio.' };
 
-  // requisitos: una por línea → jsonb array
-  const requisitos = s(fd, 'requisitos').split('\n').map((l) => l.trim()).filter(Boolean);
+  // requisitos: lista estructurada { titulo, detalle? } → jsonb array
+  let requisitos = null;
+  try {
+    const arr = JSON.parse(s(fd, 'requisitos_json') || '[]');
+    if (Array.isArray(arr)) {
+      const limpio = arr
+        .map((r) => ({ titulo: String(r?.titulo ?? '').trim(), detalle: String(r?.detalle ?? '').trim() }))
+        .filter((r) => r.titulo)
+        .map((r) => (r.detalle ? r : { titulo: r.titulo }));
+      requisitos = limpio.length ? limpio : null;
+    }
+  } catch { requisitos = null; }
   const grupos_obligatorios = GRUPOS_TRAMITE.filter((g) => fd.get(`grupo_${g}`) === 'on');
 
   const { error } = await supabaseAdmin.from('tramites').update({
@@ -203,7 +213,7 @@ export async function actualizarTramite(prevState, fd) {
     dependencia_id: nulo(s(fd, 'dependencia_id')),
     categoria_id: nulo(s(fd, 'categoria_id')),
     tiempo_estimado: nulo(s(fd, 'tiempo_estimado')),
-    requisitos: requisitos.length ? requisitos : null,
+    requisitos,
     grupos_obligatorios,
     actualizado_en: new Date().toISOString(),
   }).eq('id', id);

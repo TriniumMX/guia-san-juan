@@ -1710,6 +1710,14 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 .ficha-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
 .ficha-checklist li { position: relative; padding-left: 32px; }
 .ficha-checklist li::before { content: ''; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--accent); }
+.req-titulo { display: block; }
+.req-detalle { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; line-height: 1.5; white-space: pre-line; }
+
+/* Editor de requisitos (admin): renglones título + detalle */
+.req-editor { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+.req-editor-row { display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--line-soft); border-radius: 10px; padding: 12px; }
+.req-editor-detalle { min-height: 56px; }
+.req-editor-acciones { display: flex; justify-content: flex-end; }
 
 .ficha-costos { width: 100%; border-collapse: collapse; }
 .ficha-costos td { padding: 11px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
