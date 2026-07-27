@@ -1713,11 +1713,10 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 .req-titulo { display: block; }
 .req-detalle { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; line-height: 1.5; white-space: pre-line; }
 
-/* Editor de requisitos (admin): renglones título + detalle */
-.req-editor { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
-.req-editor-row { display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--line-soft); border-radius: 10px; padding: 12px; }
-.req-editor-detalle { min-height: 56px; }
-.req-editor-acciones { display: flex; justify-content: flex-end; }
+/* Alta de requisito (admin): título + detalle opcional, por server action */
+.req-add { display: flex; flex-direction: column; gap: 8px; align-items: stretch; max-width: 640px; }
+.req-add .pf-textarea { min-height: 56px; }
+.req-add button { align-self: flex-start; }
 
 .ficha-costos { width: 100%; border-collapse: collapse; }
 .ficha-costos td { padding: 11px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }

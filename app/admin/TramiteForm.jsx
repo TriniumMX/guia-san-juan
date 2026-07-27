@@ -1,34 +1,14 @@
 'use client';
-import { useActionState, useState } from 'react';
+import { useActionState } from 'react';
 import { crearTramite, actualizarTramite } from './contenido-actions';
 
 const GRUPOS = ['requisitos', 'costos', 'contacto', 'ubicacion', 'horarios_propios', 'representacion'];
 const EDITORIALES = ['requisitos', 'costos', 'contacto', 'ubicacion', 'horarios_propios'];
 
-// Normaliza el jsonb (retrocompatible: strings antiguos → { titulo, detalle }).
-function normReqs(requisitos) {
-  if (!Array.isArray(requisitos)) return [];
-  return requisitos.map((r) =>
-    typeof r === 'string' ? { titulo: r, detalle: '' } : { titulo: r?.titulo || '', detalle: r?.detalle || '' },
-  );
-}
-
 export default function TramiteForm({ tramite, dependencias = [], categorias = [] }) {
   const editar = !!tramite;
   const [state, action, pending] = useActionState(editar ? actualizarTramite : crearTramite, null);
   const obligatorios = new Set(tramite?.grupos_obligatorios || []);
-
-  const [reqs, setReqs] = useState(normReqs(tramite?.requisitos));
-  const setReq = (i, campo, val) => setReqs((prev) => prev.map((r, j) => (j === i ? { ...r, [campo]: val } : r)));
-  const addReq = () => setReqs((prev) => [...prev, { titulo: '', detalle: '' }]);
-  const delReq = (i) => setReqs((prev) => prev.filter((_, j) => j !== i));
-  // Se serializa limpio: sin renglones vacíos y sin campo detalle si está vacío.
-  const reqsJson = JSON.stringify(
-    reqs
-      .map((r) => ({ titulo: r.titulo.trim(), detalle: r.detalle.trim() }))
-      .filter((r) => r.titulo)
-      .map((r) => (r.detalle ? r : { titulo: r.titulo })),
-  );
 
   return (
     <form action={action} className="pf-form">
@@ -70,35 +50,6 @@ export default function TramiteForm({ tramite, dependencias = [], categorias = [
           <div className="pf-row">
             <label className="pf-label" htmlFor="t-tiempo">Tiempo estimado</label>
             <input id="t-tiempo" name="tiempo_estimado" className="pf-field" defaultValue={tramite.tiempo_estimado || ''} placeholder="ej. 3 días hábiles" />
-          </div>
-          <div className="pf-row">
-            <label className="pf-label">Requisitos</label>
-            <input type="hidden" name="requisitos_json" value={reqsJson} />
-            {reqs.length === 0 && <p className="pf-note">Sin requisitos aún. Agrega el primero.</p>}
-            <div className="req-editor">
-              {reqs.map((r, i) => (
-                <div key={i} className="req-editor-row">
-                  <input
-                    className="pf-field"
-                    aria-label={`Requisito ${i + 1}`}
-                    placeholder="Nombre del requisito (ej. Acta de nacimiento)"
-                    value={r.titulo}
-                    onChange={(e) => setReq(i, 'titulo', e.target.value)}
-                  />
-                  <textarea
-                    className="pf-field pf-textarea req-editor-detalle"
-                    aria-label={`Detalle del requisito ${i + 1}`}
-                    placeholder="Detalle (opcional): especificaciones, cantidad, condiciones…"
-                    value={r.detalle}
-                    onChange={(e) => setReq(i, 'detalle', e.target.value)}
-                  />
-                  <div className="req-editor-acciones">
-                    <button type="button" className="admin-link admin-link--danger" onClick={() => delReq(i)}>Quitar</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <button type="button" className="btn btn--ghost" onClick={addReq}>+ Agregar requisito</button>
           </div>
           <div className="pf-row">
             <label className="pf-label" htmlFor="t-desc">Descripción (Markdown)</label>

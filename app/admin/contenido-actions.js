@@ -204,18 +204,8 @@ export async function actualizarTramite(prevState, fd) {
   if (!id) return { error: 'Falta el id.' };
   if (!nombre) return { error: 'El nombre es obligatorio.' };
 
-  // requisitos: lista estructurada { titulo, detalle? } → jsonb array
-  let requisitos = null;
-  try {
-    const arr = JSON.parse(s(fd, 'requisitos_json') || '[]');
-    if (Array.isArray(arr)) {
-      const limpio = arr
-        .map((r) => ({ titulo: aOracion(String(r?.titulo ?? '').trim()), detalle: aOracion(String(r?.detalle ?? '').trim()) }))
-        .filter((r) => r.titulo)
-        .map((r) => (r.detalle ? r : { titulo: r.titulo }));
-      requisitos = limpio.length ? limpio : null;
-    }
-  } catch { requisitos = null; }
+  // Los requisitos se editan en su propia sección (server actions por renglón),
+  // no en este formulario, para no depender de JS de cliente.
   const grupos_obligatorios = GRUPOS_TRAMITE.filter((g) => fd.get(`grupo_${g}`) === 'on');
 
   const { error } = await supabaseAdmin.from('tramites').update({
@@ -225,7 +215,6 @@ export async function actualizarTramite(prevState, fd) {
     dependencia_id: nulo(s(fd, 'dependencia_id')),
     categoria_id: nulo(s(fd, 'categoria_id')),
     tiempo_estimado: nulo(s(fd, 'tiempo_estimado')),
-    requisitos,
     grupos_obligatorios,
     actualizado_en: new Date().toISOString(),
   }).eq('id', id);
@@ -234,6 +223,48 @@ export async function actualizarTramite(prevState, fd) {
   await registrarBitacora(admin.id, 'actualizar', 'tramites', id, null);
   revalidatePath(`/admin/tramites/${id}`);
   return { ok: true };
+}
+
+// Requisitos: se editan por renglón con server actions (patrón de costos/teléfonos),
+// sin JS de cliente. Cada requisito es { titulo, detalle? } en el jsonb `requisitos`.
+const normRequisitos = (v) =>
+  (Array.isArray(v) ? v : [])
+    .map((r) => (typeof r === 'string' ? { titulo: r } : r))
+    .filter((r) => r && r.titulo);
+
+export async function agregarRequisitoTramite(fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const tramite_id = s(fd, 'tramite_id');
+  const titulo = aOracion(s(fd, 'titulo'));
+  const detalle = aOracion(s(fd, 'detalle'));
+  if (!tramite_id || !titulo) throw new Error('Falta el nombre del requisito');
+  const { data: t, error: e1 } = await supabaseAdmin.from('tramites').select('requisitos').eq('id', tramite_id).single();
+  if (e1) throw e1;
+  const actuales = normRequisitos(t?.requisitos);
+  const nuevo = detalle ? { titulo, detalle } : { titulo };
+  const { error } = await supabaseAdmin.from('tramites')
+    .update({ requisitos: [...actuales, nuevo], actualizado_en: new Date().toISOString() })
+    .eq('id', tramite_id);
+  if (error) throw error;
+  await registrarBitacora(admin.id, 'agregar_requisito', 'tramites', tramite_id, { titulo });
+  revalidatePath(`/admin/tramites/${tramite_id}`);
+}
+
+export async function eliminarRequisitoTramite(fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const tramite_id = s(fd, 'tramite_id');
+  const indice = Number(s(fd, 'indice'));
+  if (!tramite_id || !Number.isInteger(indice)) throw new Error('Datos inválidos');
+  const { data: t, error: e1 } = await supabaseAdmin.from('tramites').select('requisitos').eq('id', tramite_id).single();
+  if (e1) throw e1;
+  const actuales = normRequisitos(t?.requisitos);
+  actuales.splice(indice, 1);
+  const { error } = await supabaseAdmin.from('tramites')
+    .update({ requisitos: actuales.length ? actuales : null, actualizado_en: new Date().toISOString() })
+    .eq('id', tramite_id);
+  if (error) throw error;
+  await registrarBitacora(admin.id, 'eliminar_requisito', 'tramites', tramite_id, { indice });
+  revalidatePath(`/admin/tramites/${tramite_id}`);
 }
 
 export async function cambiarEstadoTramite(prevState, fd) {

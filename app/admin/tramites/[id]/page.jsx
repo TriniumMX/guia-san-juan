@@ -5,7 +5,7 @@ import TramiteForm from '../../TramiteForm';
 import EstadoControl from '../../EstadoControl';
 import CtaControl from '../../CtaControl';
 import VerificacionForm from '../../VerificacionForm';
-import { agregarCostoTramite, eliminarCostoTramite } from '../../contenido-actions';
+import { agregarCostoTramite, eliminarCostoTramite, agregarRequisitoTramite, eliminarRequisitoTramite } from '../../contenido-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,6 +35,9 @@ export default async function EditarTramitePage({ params }) {
   const obligatorios = t.grupos_obligatorios || [];
   const vigentes = new Set(vers.filter((v) => !v.invalidada_en && v.resultado === 'confirmado').map((v) => v.grupo));
   const faltan = obligatorios.filter((g) => !vigentes.has(g));
+  const requisitos = (Array.isArray(t.requisitos) ? t.requisitos : [])
+    .map((r) => (typeof r === 'string' ? { titulo: r } : r))
+    .filter((r) => r && r.titulo);
 
   return (
     <AdminChrome>
@@ -66,6 +69,31 @@ export default async function EditarTramitePage({ params }) {
         <section className="admin-section">
           <h2 className="admin-section-title">Datos</h2>
           <TramiteForm tramite={t} dependencias={dependencias} categorias={categorias} />
+        </section>
+
+        <section className="admin-section">
+          <h2 className="admin-section-title">Requisitos</h2>
+          <p className="admin-muted">Agrega uno por uno. El detalle es opcional (para requisitos con especificaciones). El texto EN MAYÚSCULAS se normaliza al guardar.</p>
+          {requisitos.length === 0 ? <p className="admin-muted">Sin requisitos.</p> : (
+            <ul className="admin-list">
+              {requisitos.map((r, i) => (
+                <li key={i} className="admin-list-row">
+                  <span><b>{r.titulo}</b>{r.detalle ? <span className="admin-muted"> — {r.detalle}</span> : ''}</span>
+                  <form action={eliminarRequisitoTramite}>
+                    <input type="hidden" name="tramite_id" value={t.id} />
+                    <input type="hidden" name="indice" value={i} />
+                    <button className="admin-link admin-link--danger" type="submit">Quitar</button>
+                  </form>
+                </li>
+              ))}
+            </ul>
+          )}
+          <form action={agregarRequisitoTramite} className="req-add">
+            <input type="hidden" name="tramite_id" value={t.id} />
+            <input name="titulo" aria-label="Nombre del requisito" className="pf-field" placeholder="Nombre del requisito (ej. Acta de nacimiento)" required />
+            <textarea name="detalle" aria-label="Detalle del requisito" className="pf-field pf-textarea" placeholder="Detalle (opcional): especificaciones, cantidad, condiciones…" />
+            <button className="btn btn--ghost" type="submit">Agregar requisito</button>
+          </form>
         </section>
 
         <section className="admin-section">
