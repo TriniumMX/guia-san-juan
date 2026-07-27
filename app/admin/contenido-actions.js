@@ -24,6 +24,18 @@ const coord = (v, max) => {
   return Number.isFinite(n) && Math.abs(n) <= max ? n : null;
 };
 
+// Siglas frecuentes en trámites que deben conservarse en mayúsculas.
+const SIGLAS = new Set(['INE', 'IFE', 'CURP', 'RFC', 'IMSS', 'ISSSTE', 'SAT', 'CFE', 'SEP', 'INAPAM', 'CP', 'PDF', 'ID', 'IVA', 'NSS', 'CLABE', 'SJR']);
+// Normaliza texto "a gritos" (TODO EN MAYÚSCULAS) a mayúscula inicial de oración.
+// Si el texto ya trae minúsculas (fue escrito en mixto), se respeta tal cual.
+function aOracion(texto) {
+  const t = String(texto || '').trim();
+  if (!t || /[a-záéíóúñü]/.test(t)) return t;
+  let out = t.toLowerCase().replace(/(^\s*|[.!?]\s+|\n\s*)([a-záéíóúñü])/g, (_, sep, ch) => sep + ch.toUpperCase());
+  out = out.replace(/\b[a-záéíóúñü]+\b/g, (w) => (SIGLAS.has(w.toUpperCase()) ? w.toUpperCase() : w));
+  return out;
+}
+
 // Slug: minúsculas, sin acentos, guiones. Inmutable una vez publicado (se valida en UI).
 function slugify(txt) {
   return txt.normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -198,7 +210,7 @@ export async function actualizarTramite(prevState, fd) {
     const arr = JSON.parse(s(fd, 'requisitos_json') || '[]');
     if (Array.isArray(arr)) {
       const limpio = arr
-        .map((r) => ({ titulo: String(r?.titulo ?? '').trim(), detalle: String(r?.detalle ?? '').trim() }))
+        .map((r) => ({ titulo: aOracion(String(r?.titulo ?? '').trim()), detalle: aOracion(String(r?.detalle ?? '').trim()) }))
         .filter((r) => r.titulo)
         .map((r) => (r.detalle ? r : { titulo: r.titulo }));
       requisitos = limpio.length ? limpio : null;
