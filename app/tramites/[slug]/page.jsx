@@ -121,7 +121,7 @@ export default async function TramitePage({ params }) {
         {requisitos.length > 0 && (
           <section className="ficha-sec">
             <h2>Requisitos</h2>
-            <ul className="ficha-checklist">
+            <ul className="ficha-checklist ficha-checklist--doc">
               {requisitos.map((r, i) => (
                 <li key={i}>
                   <span className="req-titulo">{r.titulo}</span>

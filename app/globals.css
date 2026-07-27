@@ -1710,6 +1710,12 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 .ficha-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
 .ficha-checklist li { position: relative; padding-left: 32px; }
 .ficha-checklist li::before { content: ''; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--accent); }
+/* Variante para requisitos: ícono de documento (no parece checkbox clickeable) */
+.ficha-checklist--doc li::before {
+  border: none; border-radius: 0; background-color: var(--accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5'/%3E%3Cpath d='M9 13h6M9 17h6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5'/%3E%3Cpath d='M9 13h6M9 17h6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
 .req-titulo { display: block; }
 .req-detalle { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; line-height: 1.5; white-space: pre-line; }
 
