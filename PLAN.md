@@ -25,7 +25,7 @@
 | Datos | Supabase ya integrado (tabla `propuestas`, cliente anon + service role) |
 | Admin | Panel `/admin` con **Supabase Auth** (email+contraseña, sesión firmada, `requireAdmin` por action — B3 resuelto en código, acreditación M17 pendiente, ver §5.1) |
 | SEO | Metadata completa, JSON-LD, `sitemap.js`, `robots.js`, Open Graph |
-| Legal | Disclaimer "iniciativa independiente / no oficial" en home y footer (**redacción ambigua — M4, ver §1.1**) |
+| Legal | Disclaimer "proyecto independiente del Gobierno Municipal / no oficial" en home y footer (**redacción M4, ver §1.1**) |
 | Estilos | CSS propio (`globals.css`), temas claro/oscuro (`data-mood`), fuentes Google |
 
 **Decisiones de adaptación respecto a las sugerencias originales:**
@@ -42,9 +42,13 @@
 ### 1.1 Diferenciación del sitio oficial
 
 - [x] Disclaimer en home y footer (existe, pero ver siguiente punto).
-- [ ] **Corregir redacción ambigua (M4)**: "proyecto independiente de Trinium" puede leerse como "independiente DE Trinium". Redacción inequívoca en todo el sitio:
-  > "Guía San Juan es un proyecto de Trinium, **independiente del Gobierno Municipal y de las dependencias públicas mencionadas**. No es un sitio oficial."
-  La redacción final se revisa jurídicamente, en especial donde se ofrezca gestoría.
+- [x] **Redacción inequívoca del disclaimer (M4)**: se adopta en todo el sitio la redacción:
+  > "Guía San Juan es un proyecto **independiente del Gobierno Municipal**. No es un sitio oficial."
+  Decisión del propietario (2026-07-27): se simplifica respecto a la versión previa
+  ("un proyecto de Trinium, independiente del Gobierno Municipal y de las dependencias públicas
+  mencionadas"), quitando la mención a Trinium y la cláusula de dependencias en el aviso de
+  independencia. La atribución a Trinium se conserva como crédito de autoría (footer del home) y
+  como responsable en las páginas legales. Revisión jurídica final donde se ofrezca gestoría.
 - [ ] Componente reutilizable `<DisclaimerOficial />` en cada página de trámite y dependencia.
 - [ ] Página `/acerca-de/` explicando qué es el proyecto, quién lo hace y qué NO es.
 - [ ] Evitar en diseño/copy cualquier imitación de identidad gráfica municipal.

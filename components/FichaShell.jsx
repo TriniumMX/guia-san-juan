@@ -29,9 +29,7 @@ export default function FichaShell({ children }) {
       <footer className="ficha-footer">
         <div className="wrap">
           <p>
-            <b>Guía San Juan</b> es un proyecto de{' '}
-            <a href="https://trinium.com.mx" target="_blank" rel="noopener noreferrer">Trinium</a>,
-            independiente del Gobierno Municipal. No es un sitio oficial.
+            <b>Guía San Juan</b> es un proyecto independiente del Gobierno Municipal. No es un sitio oficial.
           </p>
           <p className="ficha-footer-copy">
             © 2026 Guía San Juan · Proyecto ciudadano no oficial · <a href="/acerca-de">Acerca de</a> · <a href="/terminos">Términos</a> · <a href="/privacidad">Aviso de privacidad</a>
