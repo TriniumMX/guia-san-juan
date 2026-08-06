@@ -3,6 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 import { registrarBusquedaSinResultado } from '../app/buscador-actions';
 import { buscar } from '../lib/buscar';
 
+const TIPO_LABEL = {
+  tramite: 'Trámite', dependencia: 'Dependencia',
+  lugar: 'Lugar', evento: 'Evento', ruta: 'Ruta', recomendacion: 'Recomendación',
+};
+
 export default function Buscador({ variant = 'default', placeholder = '¿Qué trámite necesitas?' }) {
   const [indice, setIndice] = useState(null);
   const [q, setQ] = useState('');
@@ -57,7 +62,7 @@ export default function Buscador({ variant = 'default', placeholder = '¿Qué tr
           {resultados.length > 0 ? (
             resultados.map((it) => (
               <a key={it.url} href={it.url} className="buscador-item" role="option">
-                <span className={`buscador-tipo buscador-tipo--${it.tipo}`}>{it.tipo === 'tramite' ? 'Trámite' : 'Dependencia'}</span>
+                <span className={`buscador-tipo buscador-tipo--${it.tipo}`}>{TIPO_LABEL[it.tipo] || it.tipo}</span>
                 <span className="buscador-nombre">{it.nombre}</span>
                 {it.detalle && <span className="buscador-detalle">{it.detalle}</span>}
               </a>

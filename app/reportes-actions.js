@@ -3,8 +3,14 @@ import { supabaseAdmin } from '../lib/supabase-admin';
 
 // Reporte ciudadano de dato incorrecto (§3.4). Alimenta la cola de verificación.
 // Público (anónimo) → escribe por service role en la tabla privada de reportes.
-const TABLA = { tramite: 'tramite_reportes', dependencia: 'dependencia_reportes' };
-const COL = { tramite: 'tramite_id', dependencia: 'dependencia_id' };
+const TABLA = {
+  tramite: 'tramite_reportes', dependencia: 'dependencia_reportes',
+  lugar: 'lugar_reportes', evento: 'evento_reportes', ruta: 'ruta_reportes', recomendacion: 'recomendacion_reportes',
+};
+const COL = {
+  tramite: 'tramite_id', dependencia: 'dependencia_id',
+  lugar: 'lugar_id', evento: 'evento_id', ruta: 'ruta_id', recomendacion: 'recomendacion_id',
+};
 
 export async function reportarDato(tipo, id, mensaje, honeypot) {
   if (honeypot) return { ok: true }; // bot: éxito silencioso

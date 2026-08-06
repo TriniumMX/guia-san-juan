@@ -94,6 +94,14 @@ guiasanjuan.mx/
 │   └── /agentes/solicitar/      → flujo de contratación (Fase 3)
 ├── /guias/                      → contenido long-tail ("cómo sacar tu acta de nacimiento en SJR")
 │   └── /guias/[slug]/
+├── /lugares/                    → sitios de interés (línea Descubrimiento; modelo ligero)
+│   └── /lugares/[slug]/
+├── /eventos/                    → agenda/cartelera (fechados; índice muestra próximos)
+│   └── /eventos/[slug]/
+├── /rutas/                      → itinerarios = lugares ordenados (ruta_lugares, FK real B7)
+│   └── /rutas/[slug]/
+├── /recomendaciones/            → artículos/tips markdown (tono turístico)
+│   └── /recomendaciones/[slug]/
 ├── /acerca-de/                  → qué es el proyecto (independencia)
 ├── /privacidad/  /terminos/     → legal
 └── /desarrollado-por-trinium/   → puente de leads + caso de estudio
@@ -544,6 +552,26 @@ Una ficha desactualizada servida offline es un riesgo funcional, no una comodida
 5. Home: buscador prominente + accesos a trámites/directorio (actualizar copy post-feria).
 
 **Salida**: 15-20 trámites publicados con proveniencia · ciclo de verificación operando con el cron · accesibilidad WCAG 2.2 AA verificada en fichas.
+
+### Fase 1B-D — Línea de Descubrimiento (turismo) — *añadida 2026-08-06*
+
+Ampliación de alcance decidida por producto: de "portal de trámites" a "portal de trámites +
+descubrimiento", para atraer visitantes (el home ya lo insinuaba en las píldoras del hero). Cuatro
+módulos nuevos: **lugares**, **eventos**, **rutas** (lugares ordenados) y **recomendaciones**
+(artículos/tips markdown).
+
+- **Modelo LIGERO por decisión de producto** (no toca el modelo congelado v1): estado editorial +
+  slug + imágenes (bucket `imagenes`) + RLS + reportes ciudadanos. **NO** llevan el aparato de
+  verificación (nada de `*_verificaciones/_evidencias/_fuentes`, ni `verificacion_publica`, ni
+  triggers de invalidación): la frescura por grupo crítico (B4) aplica al dato cívico, no al
+  contenido turístico. El riesgo de datos que cambian se cubre con `<DisclaimerOficial />`
+  ("confirma horarios antes de acudir").
+- **Reglas duras respetadas**: B2 (estado editorial en toda entidad publicable), B7 (FK reales sin
+  polimorfismo — `ruta_lugares`), slugs inmutables, RLS en todas las tablas. Migraciones `0005`
+  (tablas) y `0006` (bucket) aplicadas 2026-08-06.
+- **No canibalizar el enfoque ciudadano** (§6): la línea se posiciona como sección propia; los
+  trámites siguen siendo el activo SEO principal.
+- Fuera de alcance por ahora: **comercios/negocios locales** (se mantiene como futuro de §6).
 
 ### Fase 1C — Asistencia editorial con IA *(solo si 1B midió un cuello de botella real)*
 

@@ -75,10 +75,11 @@ export default function Home() {
             </span>
           </a>
           <nav className="nav-links" aria-label="Secciones">
+            <a className="navlink" href="/lugares">Lugares</a>
+            <a className="navlink" href="/eventos">Eventos</a>
+            <a className="navlink" href="/rutas">Rutas</a>
             <a className="navlink" href="/tramites">Trámites</a>
             <a className="navlink" href="/directorio">Directorio</a>
-            <a className="navlink" href="#proyecto">El proyecto</a>
-            <a className="navlink" href="#pronto">Muy pronto</a>
           </nav>
           <div className="nav-cta">
             <a className="btn btn--primary" href="#proyecto">
@@ -112,10 +113,10 @@ export default function Home() {
               </p>
               <Buscador variant="hero" />
               <div className="hero-pills">
-                <a className="pill" href="#proyecto">📍 Lugares</a>
-                <a className="pill" href="#proyecto">🎶 Eventos</a>
-                <a className="pill" href="#proyecto">🛍️ Comercios</a>
-                <a className="pill" href="#proyecto">🗺️ Rutas</a>
+                <a className="pill" href="/lugares">📍 Lugares</a>
+                <a className="pill" href="/eventos">🎶 Eventos</a>
+                <a className="pill" href="/rutas">🗺️ Rutas</a>
+                <a className="pill" href="/recomendaciones">💡 Tips</a>
               </div>
               <div className="hero-actions">
                 <a className="btn btn--primary" href="#proyecto">
@@ -153,6 +154,42 @@ export default function Home() {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* DESCUBRE — accesos a los módulos de descubrimiento */}
+        <section className="section" id="descubre" aria-label="Descubre San Juan del Río">
+          <div className="wrap">
+            <div className="sec-head reveal">
+              <span className="eyebrow">Descubre San Juan</span>
+              <h2>Qué visitar, qué hacer y por dónde empezar</h2>
+              <p className="lead">
+                Lugares con encanto, los eventos que no te puedes perder, rutas listas para caminar
+                y recomendaciones de gente de aquí.
+              </p>
+            </div>
+            <div className="accesos-grid accesos-grid--4">
+              <a className="acceso" href="/lugares" style={{ '--cat': 'oklch(0.6 0.13 40)' }}>
+                <span className="acceso-ico" aria-hidden="true">📍</span>
+                <span className="acceso-txt"><b>Lugares</b><span>Sitios de interés, plazas, templos y rincones para conocer.</span></span>
+                <span className="acceso-arrow" aria-hidden="true">→</span>
+              </a>
+              <a className="acceso" href="/eventos" style={{ '--cat': 'oklch(0.58 0.14 300)' }}>
+                <span className="acceso-ico" aria-hidden="true">🎶</span>
+                <span className="acceso-txt"><b>Eventos</b><span>La agenda de ferias, cultura y actividades por venir.</span></span>
+                <span className="acceso-arrow" aria-hidden="true">→</span>
+              </a>
+              <a className="acceso" href="/rutas" style={{ '--cat': 'oklch(0.56 0.12 200)' }}>
+                <span className="acceso-ico" aria-hidden="true">🗺️</span>
+                <span className="acceso-txt"><b>Rutas</b><span>Recorridos armados para aprovechar tu visita.</span></span>
+                <span className="acceso-arrow" aria-hidden="true">→</span>
+              </a>
+              <a className="acceso" href="/recomendaciones" style={{ '--cat': 'oklch(0.58 0.12 90)' }}>
+                <span className="acceso-ico" aria-hidden="true">💡</span>
+                <span className="acceso-txt"><b>Recomendaciones</b><span>Tips y consejos para disfrutar y moverte por la ciudad.</span></span>
+                <span className="acceso-arrow" aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
         </section>
@@ -279,12 +316,10 @@ export default function Home() {
               <p className="lead">Estamos construyendo la guía sección por sección. Sé de los primeros en enterarte.</p>
             </div>
             <div className="soon-grid">
-              <div className="soon reveal"><span className="n">01</span><span className="label">Lugares para visitar</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">02</span><span className="label">Eventos de la ciudad</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">03</span><span className="label">Guía de comercios locales</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">04</span><span className="label">Recomendaciones familiares</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">05</span><span className="label">Rutas culturales</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">06</span><span className="label">Espacios para negocios sanjuanenses</span><span className="chip">Pronto</span></div>
+              <div className="soon reveal"><span className="n">01</span><span className="label">Guía de comercios locales</span><span className="chip">Pronto</span></div>
+              <div className="soon reveal"><span className="n">02</span><span className="label">Espacios para negocios sanjuanenses</span><span className="chip">Pronto</span></div>
+              <div className="soon reveal"><span className="n">03</span><span className="label">Respuestas al instante por WhatsApp</span><span className="chip">Pronto</span></div>
+              <div className="soon reveal"><span className="n">04</span><span className="label">La guía en tu celular</span><span className="chip">Pronto</span></div>
             </div>
             <p className="soon-note reveal">
               <span className="pulse"></span> Estamos construyendo esta guía paso a paso, con información útil todo el año.
@@ -393,11 +428,12 @@ export default function Home() {
             <nav className="footer-nav" aria-label="Secciones del sitio">
               <h4 className="footer-nav-label">Explora</h4>
               <ul>
-                <li><a href="#top">Inicio</a></li>
+                <li><a href="/lugares">Lugares</a></li>
+                <li><a href="/eventos">Eventos</a></li>
+                <li><a href="/rutas">Rutas</a></li>
+                <li><a href="/recomendaciones">Recomendaciones</a></li>
                 <li><a href="/tramites">Trámites</a></li>
                 <li><a href="/directorio">Directorio</a></li>
-                <li><a href="#proyecto">El proyecto</a></li>
-                <li><a href="#pronto">Muy pronto</a></li>
               </ul>
             </nav>
             <div className="footer-right">

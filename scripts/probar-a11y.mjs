@@ -18,6 +18,10 @@ const db = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_
 
 const tp = (await db.from('tramites').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
 const dp = (await db.from('dependencias').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
+const lp = (await db.from('lugares').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
+const ep = (await db.from('eventos').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
+const rp = (await db.from('rutas').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
+const cp = (await db.from('recomendaciones').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
 
 const paginas = [
   ['/', 'Home'],
@@ -25,12 +29,20 @@ const paginas = [
   ['/dependencias', 'Índice dependencias'],
   ['/directorio', 'Directorio'],
   ['/guias', 'Índice guías'],
+  ['/lugares', 'Índice lugares'],
+  ['/eventos', 'Índice eventos'],
+  ['/rutas', 'Índice rutas'],
+  ['/recomendaciones', 'Índice recomendaciones'],
   ['/acerca-de', 'Acerca de'],
   ['/terminos', 'Términos de uso'],
   ['/privacidad', 'Aviso de privacidad'],
   ['/admin/login', 'Admin login'],
   ...(tp ? [[`/tramites/${tp}`, 'Ficha de trámite']] : []),
   ...(dp ? [[`/dependencias/${dp}`, 'Ficha de dependencia']] : []),
+  ...(lp ? [[`/lugares/${lp}`, 'Ficha de lugar']] : []),
+  ...(ep ? [[`/eventos/${ep}`, 'Ficha de evento']] : []),
+  ...(rp ? [[`/rutas/${rp}`, 'Ficha de ruta']] : []),
+  ...(cp ? [[`/recomendaciones/${cp}`, 'Ficha de recomendación']] : []),
 ];
 
 const NO_FIABLES = new Set(['color-contrast', 'target-size', 'scrollable-region-focusable']);

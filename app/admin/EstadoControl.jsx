@@ -1,6 +1,7 @@
 'use client';
 import { useActionState } from 'react';
 import { cambiarEstadoDependencia, cambiarEstadoTramite, cambiarEstadoDirectorio, cambiarEstadoGuia } from './contenido-actions';
+import { cambiarEstadoLugar, cambiarEstadoEvento, cambiarEstadoRuta, cambiarEstadoRecomendacion } from './descubrimiento-actions';
 
 const ESTADOS = ['borrador', 'en_revision', 'publicado', 'vencido', 'retirado'];
 const ACCIONES = {
@@ -8,6 +9,10 @@ const ACCIONES = {
   tramite: cambiarEstadoTramite,
   directorio: cambiarEstadoDirectorio,
   guia: cambiarEstadoGuia,
+  lugar: cambiarEstadoLugar,
+  evento: cambiarEstadoEvento,
+  ruta: cambiarEstadoRuta,
+  recomendacion: cambiarEstadoRecomendacion,
 };
 
 export default function EstadoControl({ tipo, id, estado }) {

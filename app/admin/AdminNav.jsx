@@ -7,6 +7,10 @@ const SECCIONES = [
   { href: '/admin/tramites', label: 'Trámites' },
   { href: '/admin/directorio', label: 'Directorio' },
   { href: '/admin/guias', label: 'Guías' },
+  { href: '/admin/lugares', label: 'Lugares' },
+  { href: '/admin/eventos', label: 'Eventos' },
+  { href: '/admin/rutas', label: 'Rutas' },
+  { href: '/admin/recomendaciones', label: 'Recomendaciones' },
   { href: '/admin/verificacion', label: 'Verificación' },
 ];
 
