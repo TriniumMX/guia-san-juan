@@ -82,7 +82,7 @@ export default function Home() {
             <a className="navlink" href="/directorio">Directorio</a>
           </nav>
           <div className="nav-cta">
-            <a className="btn btn--primary" href="#proyecto">
+            <a className="btn btn--primary" href="#descubre">
               Conoce la guía <span className="arrow">→</span>
             </a>
             <ThemeToggle />
@@ -108,21 +108,16 @@ export default function Home() {
               <h1>Guía <span className="accentword">San Juan</span></h1>
               <p className="hero-sub">Eventos, lugares y lo mejor de San Juan del Río.</p>
               <p className="hero-support">
-                Encuentra qué hacer este fin de semana, a dónde ir con la familia, qué negocios visitar
-                y qué eventos no te puedes perder. Todo en un solo lugar, claro y fácil de usar.
+                Encuentra qué hacer este fin de semana, a dónde ir con la familia, los eventos que
+                no te puedes perder y resuelve tus trámites municipales. Todo en un solo lugar,
+                claro y fácil de usar.
               </p>
               <Buscador variant="hero" />
-              <div className="hero-pills">
-                <a className="pill" href="/lugares">📍 Lugares</a>
-                <a className="pill" href="/eventos">🎶 Eventos</a>
-                <a className="pill" href="/rutas">🗺️ Rutas</a>
-                <a className="pill" href="/recomendaciones">💡 Tips</a>
-              </div>
               <div className="hero-actions">
-                <a className="btn btn--primary" href="#proyecto">
-                  ¿Qué es Guía San Juan? <span className="arrow">→</span>
+                <a className="btn btn--primary" href="#descubre">
+                  Descubre San Juan <span className="arrow">→</span>
                 </a>
-                <a className="btn btn--ghost" href="#pronto">Lo que viene</a>
+                <a className="btn btn--ghost" href="#tramites-servicios">Trámites y servicios</a>
               </div>
               <div className="hero-meta">
                 <div className="item"><b>Gratis</b><span>Toda la info, sin costo</span></div>
@@ -195,7 +190,7 @@ export default function Home() {
         </section>
 
         {/* TRÁMITES Y SERVICIOS — accesos directos al contenido real */}
-        <section className="section" id="tramites-servicios" aria-label="Trámites y servicios">
+        <section className="section band--soft" id="tramites-servicios" aria-label="Trámites y servicios">
           <div className="wrap">
             <div className="sec-head reveal">
               <span className="eyebrow">Trámites y servicios</span>
@@ -236,79 +231,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* QUÉ SERÁ */}
-        <section className="section" id="proyecto" aria-label="Qué será Guía San Juan">
-          <div className="wrap">
-            <div className="sec-head reveal">
-              <span className="eyebrow">¿Qué encuentras aquí?</span>
-              <h2>Todo sobre San Juan, en un solo lugar</h2>
-              <p className="lead">
-                Deja de buscar en 10 sitios distintos. Aquí vas a encontrar eventos, lugares, comercios, rutas
-                y recomendaciones — todo actualizado, bien organizado y fácil de consultar.
-              </p>
-            </div>
-            <div className="card-grid">
-              <article className="feature reveal">
-                <span className="ficon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                    <rect x="3" y="4.5" width="18" height="16" rx="2" /><path d="M3 9h18M8 2.5v4M16 2.5v4" />
-                  </svg>
-                </span>
-                <h3>Encuentra eventos</h3>
-                <p>¿Qué hay este fin de semana? Conciertos, ferias, expo y actividades: siempre al día.</p>
-              </article>
-              <article className="feature reveal">
-                <span className="ficon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                    <path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" />
-                  </svg>
-                </span>
-                <h3>Explora lugares</h3>
-                <p>Desde el Puente de la Historia hasta los rincones que solo los locales conocen.</p>
-              </article>
-              <article className="feature reveal">
-                <span className="ficon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                    <path d="M4 9 5.2 4.5h13.6L20 9M4 9v10.5h16V9M4 9h16M9 19.5V14h6v5.5" />
-                  </svg>
-                </span>
-                <h3>Apoya comercios locales</h3>
-                <p>Restaurantes, tiendas y servicios de San Juan. Encuentra y apoya lo de aquí.</p>
-              </article>
-              <article className="feature reveal">
-                <span className="ficon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                    <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
-                  </svg>
-                </span>
-                <h3>Resuelve tu día</h3>
-                <p>Teléfonos, direcciones, horarios y datos prácticos que necesitas ya.</p>
-              </article>
-              <article className="feature reveal">
-                <span className="ficon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                    <path d="M9 4 4 6.5v13L9 17l6 2.5 5-2.5v-13L15 6.5 9 4Z" /><path d="M9 4v13M15 6.5v13" />
-                  </svg>
-                </span>
-                <h3>Sigue rutas</h3>
-                <p>Recorridos culturales, gastronómicos y familiares listos para caminar.</p>
-              </article>
-              <article className="feature reveal">
-                <span className="ficon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                    <path d="M4 19.5V6a2 2 0 0 1 2-2h6v16H6a2 2 0 0 0-2 1.5Z" />
-                    <path d="M20 19.5V6a2 2 0 0 0-2-2h-6v16h6a2 2 0 0 1 2 1.5Z" />
-                  </svg>
-                </span>
-                <h3>Conoce la historia</h3>
-                <p>Lo que hace única a San Juan, contado de forma breve y con orgullo.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
         {/* MUY PRONTO */}
-        <section className="section band--soft" id="pronto" aria-label="Muy pronto">
+        <section className="section" id="pronto" aria-label="Muy pronto">
           <div className="wrap">
             <div className="sec-head reveal">
               <span className="eyebrow">En camino</span>

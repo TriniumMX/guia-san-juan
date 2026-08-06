@@ -18,7 +18,7 @@ export default async function sitemap() {
     { url: `${SITE_URL}/acerca-de`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
     { url: `${SITE_URL}/terminos`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
     { url: `${SITE_URL}/privacidad`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${SITE_URL}/#proyecto`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/#descubre`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   ];
 
   const [
