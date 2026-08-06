@@ -2,7 +2,7 @@
 import { useActionState } from 'react';
 import { crearLugar, actualizarLugar } from './descubrimiento-actions';
 
-const CATEGORIAS = ['Templo', 'Plaza', 'Museo', 'Parque', 'Mirador', 'Mercado', 'Monumento', 'Restaurante', 'Otro'];
+const CATEGORIAS = ['Templo', 'Plaza', 'Museo', 'Parque', 'Mirador', 'Mercado', 'Monumento', 'Restaurante', 'Bar', 'Café', 'Otro'];
 
 export default function LugarForm({ lugar }) {
   const editar = !!lugar;
