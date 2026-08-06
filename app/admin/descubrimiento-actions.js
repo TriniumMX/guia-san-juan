@@ -70,6 +70,7 @@ export async function actualizarLugar(prevState, fd) {
   if (error) return { error: error.message };
   await registrarBitacora(admin.id, 'actualizar', 'lugares', id, null);
   revalidatePath(`/admin/lugares/${id}`);
+  await revalidarPublico('lugares', id);
   return { ok: true };
 }
 
@@ -138,6 +139,7 @@ export async function actualizarEvento(prevState, fd) {
   if (error) return { error: error.message };
   await registrarBitacora(admin.id, 'actualizar', 'eventos', id, null);
   revalidatePath(`/admin/eventos/${id}`);
+  await revalidarPublico('eventos', id);
   return { ok: true };
 }
 
@@ -177,6 +179,7 @@ export async function actualizarRuta(prevState, fd) {
   if (error) return { error: error.message };
   await registrarBitacora(admin.id, 'actualizar', 'rutas', id, null);
   revalidatePath(`/admin/rutas/${id}`);
+  await revalidarPublico('rutas', id);
   return { ok: true };
 }
 
@@ -196,6 +199,7 @@ export async function agregarLugarARuta(fd) {
   if (error) throw error;
   await registrarBitacora(admin.id, 'agregar_lugar_ruta', 'rutas', ruta_id, { lugar_id });
   revalidatePath(`/admin/rutas/${ruta_id}`);
+  await revalidarPublico('rutas', ruta_id);
 }
 
 export async function quitarLugarDeRuta(fd) {
@@ -204,6 +208,7 @@ export async function quitarLugarDeRuta(fd) {
   const { error } = await supabaseAdmin.from('ruta_lugares').delete().eq('id', id);
   if (error) throw error;
   revalidatePath(`/admin/rutas/${ruta_id}`);
+  await revalidarPublico('rutas', ruta_id);
 }
 
 export async function actualizarOrdenRutaLugar(fd) {
@@ -214,6 +219,7 @@ export async function actualizarOrdenRutaLugar(fd) {
   const { error } = await supabaseAdmin.from('ruta_lugares').update({ orden }).eq('id', id);
   if (error) throw error;
   revalidatePath(`/admin/rutas/${ruta_id}`);
+  await revalidarPublico('rutas', ruta_id);
 }
 
 // ============================================================
@@ -248,6 +254,7 @@ export async function actualizarRecomendacion(prevState, fd) {
   if (error) return { error: error.message };
   await registrarBitacora(admin.id, 'actualizar', 'recomendaciones', id, null);
   revalidatePath(`/admin/recomendaciones/${id}`);
+  await revalidarPublico('recomendaciones', id);
   return { ok: true };
 }
 
@@ -296,6 +303,7 @@ export async function agregarImagen(fd) {
   if (error) { await supabaseAdmin.storage.from('imagenes').remove([ruta]); volver('error'); }
   await registrarBitacora(admin.id, 'agregar_imagen', mod.tabla, id, { ruta });
   revalidatePath(`/admin/${mod.seg}/${id}`);
+  revalidatePath(`/${mod.seg}`);
   if (row?.slug) revalidatePath(`/${mod.seg}/${row.slug}`);
   volver('ok');
 }
@@ -314,6 +322,7 @@ export async function eliminarImagen(fd) {
   await supabaseAdmin.storage.from('imagenes').remove([ruta]);
   await registrarBitacora(admin.id, 'eliminar_imagen', mod.tabla, id, { ruta });
   revalidatePath(`/admin/${mod.seg}/${id}`);
+  revalidatePath(`/${mod.seg}`);
   if (row?.slug) revalidatePath(`/${mod.seg}/${row.slug}`);
 }
 
@@ -326,12 +335,22 @@ async function cambiarEstadoGenerico(fd, tipo) {
   const id = s(fd, 'id'); const estado = s(fd, 'estado');
   if (!mod || !id) return { error: 'Datos inválidos' };
   if (!ESTADOS.includes(estado)) return { error: 'Estado inválido' };
-  const { error } = await supabaseAdmin.from(mod.tabla).update({ estado }).eq('id', id);
+  const { data: row, error } = await supabaseAdmin.from(mod.tabla).update({ estado }).eq('id', id).select('slug').single();
   if (error) return { error: error.message };
   await registrarBitacora(admin.id, 'cambiar_estado', mod.tabla, id, { estado });
   revalidatePath(`/admin/${mod.seg}/${id}`);
   revalidatePath(`/admin/${mod.seg}`);
+  revalidatePath(`/${mod.seg}`);                       // índice público
+  revalidatePath(`/${mod.seg}`);
+  if (row?.slug) revalidatePath(`/${mod.seg}/${row.slug}`); // ficha pública
   return { ok: true };
+}
+
+// Refresca el índice y la ficha públicos de un módulo (ISR) tras un cambio de contenido.
+async function revalidarPublico(seg, id) {
+  const { data } = await supabaseAdmin.from(seg).select('slug').eq('id', id).single();
+  revalidatePath(`/${seg}`);
+  if (data?.slug) revalidatePath(`/${seg}/${data.slug}`);
 }
 
 async function geocodeNominatim(direccion) {
