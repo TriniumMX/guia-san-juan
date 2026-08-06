@@ -112,7 +112,6 @@ export default function Home() {
                 no te puedes perder y resuelve tus trámites municipales. Todo en un solo lugar,
                 claro y fácil de usar.
               </p>
-              <Buscador variant="hero" />
               <div className="hero-actions">
                 <a className="btn btn--primary" href="#descubre">
                   Descubre San Juan <span className="arrow">→</span>
@@ -199,6 +198,9 @@ export default function Home() {
                 Consulta el catálogo de trámites municipales o encuentra el teléfono de la dependencia
                 que necesitas. Información verificada, clara y en un solo lugar.
               </p>
+            </div>
+            <div className="buscador-centrado reveal">
+              <Buscador placeholder="¿Qué trámite necesitas?" />
             </div>
             <div className="accesos-grid">
               <a className="acceso" href="/tramites">

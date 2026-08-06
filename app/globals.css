@@ -1860,6 +1860,7 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
    ============================================================ */
 .buscador { position: relative; width: 100%; }
 .buscador--hero { margin: 22px 0 24px; max-width: 560px; }
+.buscador-centrado { max-width: 560px; margin: 8px auto 40px; }
 .buscador-campo { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 2px solid var(--line); border-radius: 14px; padding: 0 16px; transition: border-color 0.15s, box-shadow 0.15s; }
 .buscador-campo:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px oklch(from var(--accent) l c h / 0.12); }
 .buscador-campo svg { flex: none; color: var(--muted); }
