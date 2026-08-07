@@ -1,7 +1,7 @@
 'use client';
 import { useActionState } from 'react';
 import { cambiarEstadoDependencia, cambiarEstadoTramite, cambiarEstadoDirectorio, cambiarEstadoGuia } from './contenido-actions';
-import { cambiarEstadoLugar, cambiarEstadoEvento, cambiarEstadoRuta, cambiarEstadoRecomendacion } from './descubrimiento-actions';
+import { cambiarEstadoLugar, cambiarEstadoEvento, cambiarEstadoRuta, cambiarEstadoRecomendacion, cambiarEstadoComercio } from './descubrimiento-actions';
 
 const ESTADOS = ['borrador', 'en_revision', 'publicado', 'vencido', 'retirado'];
 const ACCIONES = {
@@ -13,6 +13,7 @@ const ACCIONES = {
   evento: cambiarEstadoEvento,
   ruta: cambiarEstadoRuta,
   recomendacion: cambiarEstadoRecomendacion,
+  comercio: cambiarEstadoComercio,
 };
 
 export default function EstadoControl({ tipo, id, estado }) {

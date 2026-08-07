@@ -18,6 +18,7 @@ export default function FichaShell({ children }) {
             <a className="navlink" href="/lugares">Lugares</a>
             <a className="navlink" href="/eventos">Eventos</a>
             <a className="navlink" href="/rutas">Rutas</a>
+            <a className="navlink" href="/comercios">Comercios</a>
             <a className="navlink" href="/tramites">Trámites</a>
             <a className="navlink" href="/directorio">Directorio</a>
             <ThemeToggle />

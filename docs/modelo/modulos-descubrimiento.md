@@ -14,6 +14,10 @@ Complemento a `modelo-contenido-v1.md`. Documenta las entidades de la **línea d
   a `rutas` y `lugares` (B7, sin polimorfismo). Satélite: `ruta_reportes`.
 - `recomendaciones` — artículos/tips en markdown (`cuerpo_md`), como `guias` pero tono turístico.
   Satélite: `recomendacion_reportes`.
+- `comercios` (migración `0007`) — directorio de negocios locales. Campos de negocio (giro,
+  teléfono, whatsapp, sitio_web, facebook, instagram, horario) + `destacado boolean` (los destacados
+  salen primero y con sello; base de monetización §6, **sin lógica de pago**). Alta: admin +
+  propuesta pública (reusa `ProposalModal`/`propuestas`). Satélite: `comercio_reportes`.
 - Bucket `imagenes` (migración `0006`, público, 5 MB, jpeg/png/webp) para las fotos.
 
 ## Decisión: modelo LIGERO (a propósito)

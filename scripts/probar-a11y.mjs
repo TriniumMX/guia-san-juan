@@ -22,6 +22,7 @@ const lp = (await db.from('lugares').select('slug').eq('estado', 'publicado').li
 const ep = (await db.from('eventos').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
 const rp = (await db.from('rutas').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
 const cp = (await db.from('recomendaciones').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
+const mp = (await db.from('comercios').select('slug').eq('estado', 'publicado').limit(1)).data?.[0]?.slug;
 
 const paginas = [
   ['/', 'Home'],
@@ -32,6 +33,7 @@ const paginas = [
   ['/lugares', 'Índice lugares'],
   ['/eventos', 'Índice eventos'],
   ['/rutas', 'Índice rutas'],
+  ['/comercios', 'Índice comercios'],
   ['/recomendaciones', 'Índice recomendaciones'],
   ['/acerca-de', 'Acerca de'],
   ['/terminos', 'Términos de uso'],
@@ -43,6 +45,7 @@ const paginas = [
   ...(ep ? [[`/eventos/${ep}`, 'Ficha de evento']] : []),
   ...(rp ? [[`/rutas/${rp}`, 'Ficha de ruta']] : []),
   ...(cp ? [[`/recomendaciones/${cp}`, 'Ficha de recomendación']] : []),
+  ...(mp ? [[`/comercios/${mp}`, 'Ficha de comercio']] : []),
 ];
 
 const NO_FIABLES = new Set(['color-contrast', 'target-size', 'scrollable-region-focusable']);

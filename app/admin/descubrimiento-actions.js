@@ -29,6 +29,7 @@ const MODULOS = {
   evento:        { tabla: 'eventos',         seg: 'eventos' },
   ruta:          { tabla: 'rutas',           seg: 'rutas' },
   recomendacion: { tabla: 'recomendaciones', seg: 'recomendaciones' },
+  comercio:      { tabla: 'comercios',       seg: 'comercios' },
 };
 
 // ============================================================
@@ -93,6 +94,72 @@ export async function geocodificarYGuardarLugar(fd) {
   if (error) redirect(`/admin/lugares/${id}?geo=error`);
   await registrarBitacora(admin.id, 'geocodificar', 'lugares', id, punto);
   redirect(`/admin/lugares/${id}?geo=ok`);
+}
+
+// ============================================================
+// COMERCIOS (directorio de negocios locales)
+// ============================================================
+export async function crearComercio(prevState, fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const nombre = s(fd, 'nombre');
+  if (!nombre || nombre.length > 160) return { error: 'El nombre es obligatorio (máx. 160).' };
+  const slug = slugify(s(fd, 'slug') || nombre);
+  if (!slug) return { error: 'No se pudo generar un slug válido.' };
+  const { data, error } = await supabaseAdmin.from('comercios')
+    .insert({ nombre, slug, giro: nulo(s(fd, 'giro')) }).select('id').single();
+  if (error) return { error: error.code === '23505' ? 'Ya existe un comercio con ese slug.' : error.message };
+  await registrarBitacora(admin.id, 'crear', 'comercios', data.id, { nombre, slug });
+  revalidatePath('/admin/comercios');
+  redirect(`/admin/comercios/${data.id}`);
+}
+
+export async function actualizarComercio(prevState, fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const id = s(fd, 'id');
+  const nombre = s(fd, 'nombre');
+  if (!id) return { error: 'Falta el id.' };
+  if (!nombre) return { error: 'El nombre es obligatorio.' };
+  const { error } = await supabaseAdmin.from('comercios').update({
+    nombre,
+    giro: nulo(s(fd, 'giro')),
+    destacado: fd.get('destacado') === 'on',
+    resumen: nulo(s(fd, 'resumen')),
+    descripcion_md: nulo(s(fd, 'descripcion_md')),
+    direccion: nulo(s(fd, 'direccion')),
+    lat: coord(s(fd, 'lat'), 90), lng: coord(s(fd, 'lng'), 180),
+    telefono: nulo(s(fd, 'telefono')),
+    whatsapp: nulo(s(fd, 'whatsapp')),
+    sitio_web: nulo(s(fd, 'sitio_web')),
+    facebook: nulo(s(fd, 'facebook')),
+    instagram: nulo(s(fd, 'instagram')),
+    horario_texto: nulo(s(fd, 'horario_texto')),
+    actualizado_en: new Date().toISOString(),
+  }).eq('id', id);
+  if (error) return { error: error.message };
+  await registrarBitacora(admin.id, 'actualizar', 'comercios', id, null);
+  revalidatePath(`/admin/comercios/${id}`);
+  await revalidarPublico('comercios', id);
+  return { ok: true };
+}
+
+export async function cambiarEstadoComercio(prevState, fd) {
+  return cambiarEstadoGenerico(fd, 'comercio');
+}
+
+export async function geocodificarYGuardarComercio(fd) {
+  const { admin } = await requireAdmin({ escritura: true });
+  const id = s(fd, 'comercio_id');
+  if (!id) throw new Error('Falta el id del comercio');
+  const { data: com } = await supabaseAdmin.from('comercios').select('direccion').eq('id', id).single();
+  const dir = String(com?.direccion ?? '').trim();
+  if (dir.length < 4) redirect(`/admin/comercios/${id}?geo=sindir`);
+  const punto = await geocodeNominatim(dir);
+  if (!punto) redirect(`/admin/comercios/${id}?geo=notfound`);
+  const { error } = await supabaseAdmin.from('comercios')
+    .update({ lat: punto.lat, lng: punto.lng, actualizado_en: new Date().toISOString() }).eq('id', id);
+  if (error) redirect(`/admin/comercios/${id}?geo=error`);
+  await registrarBitacora(admin.id, 'geocodificar', 'comercios', id, punto);
+  redirect(`/admin/comercios/${id}?geo=ok`);
 }
 
 // ============================================================

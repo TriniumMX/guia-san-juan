@@ -100,6 +100,8 @@ guiasanjuan.mx/
 │   └── /eventos/[slug]/
 ├── /rutas/                      → itinerarios = lugares ordenados (ruta_lugares, FK real B7)
 │   └── /rutas/[slug]/
+├── /comercios/                  → directorio de negocios locales (flag destacado = monetización §6)
+│   └── /comercios/[slug]/
 ├── /recomendaciones/            → artículos/tips markdown (tono turístico)
 │   └── /recomendaciones/[slug]/
 ├── /acerca-de/                  → qué es el proyecto (independencia)
@@ -556,9 +558,12 @@ Una ficha desactualizada servida offline es un riesgo funcional, no una comodida
 ### Fase 1B-D — Línea de Descubrimiento (turismo) — *añadida 2026-08-06*
 
 Ampliación de alcance decidida por producto: de "portal de trámites" a "portal de trámites +
-descubrimiento", para atraer visitantes (el home ya lo insinuaba en las píldoras del hero). Cuatro
-módulos nuevos: **lugares**, **eventos**, **rutas** (lugares ordenados) y **recomendaciones**
-(artículos/tips markdown).
+descubrimiento", para atraer visitantes (el home ya lo insinuaba en las píldoras del hero). Módulos
+nuevos: **lugares**, **eventos**, **rutas** (lugares ordenados), **recomendaciones**
+(artículos/tips markdown) y **comercios** (directorio de negocios locales; migración `0007`,
+2026-08-07). El módulo de comercios unifica "guía de comercios" (consumidor) y "espacios para
+negocios" (dueño): un directorio público + CTA de alta (reusa `ProposalModal`/`propuestas`) + flag
+`destacado` (booleano, sin pagos) como gancho de monetización de §6.
 
 - **Modelo LIGERO por decisión de producto** (no toca el modelo congelado v1): estado editorial +
   slug + imágenes (bucket `imagenes`) + RLS + reportes ciudadanos. **NO** llevan el aparato de

@@ -133,12 +133,12 @@ export default function ProposalModal() {
                   </label>
                   <select className="pf-field" id="pf-cat" name="categoria" required defaultValue="">
                     <option value="" disabled>Elige una categoría…</option>
-                    <option>01 · Lugares para visitar</option>
-                    <option>02 · Eventos de la ciudad</option>
-                    <option>03 · Guía de comercios locales</option>
-                    <option>04 · Recomendaciones familiares</option>
-                    <option>05 · Rutas culturales</option>
-                    <option>06 · Espacios para negocios sanjuanenses</option>
+                    <option>Lugar</option>
+                    <option>Evento</option>
+                    <option>Comercio / negocio</option>
+                    <option>Ruta</option>
+                    <option>Recomendación</option>
+                    <option>Otro</option>
                   </select>
                 </div>
                 <div className="pf-row">

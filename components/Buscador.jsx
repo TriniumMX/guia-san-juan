@@ -5,7 +5,7 @@ import { buscar } from '../lib/buscar';
 
 const TIPO_LABEL = {
   tramite: 'Trámite', dependencia: 'Dependencia',
-  lugar: 'Lugar', evento: 'Evento', ruta: 'Ruta', recomendacion: 'Recomendación',
+  lugar: 'Lugar', evento: 'Evento', ruta: 'Ruta', recomendacion: 'Recomendación', comercio: 'Comercio',
 };
 
 export default function Buscador({ variant = 'default', placeholder = '¿Qué trámite necesitas?' }) {

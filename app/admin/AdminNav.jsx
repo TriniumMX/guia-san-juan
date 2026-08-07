@@ -21,6 +21,7 @@ const GRUPOS = [
       { href: '/admin/lugares', label: 'Lugares' },
       { href: '/admin/eventos', label: 'Eventos' },
       { href: '/admin/rutas', label: 'Rutas' },
+      { href: '/admin/comercios', label: 'Comercios' },
       { href: '/admin/recomendaciones', label: 'Recomendaciones' },
     ],
   },

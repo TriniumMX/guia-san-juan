@@ -1813,6 +1813,10 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 .desc-card-body b { font-size: 18px; color: var(--ink); }
 .desc-card-sub { font-size: 14.5px; color: var(--muted); line-height: 1.5; }
 .desc-chip { align-self: flex-start; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--accent-deep); background: var(--accent-soft); border-radius: 999px; padding: 3px 10px; margin-bottom: 10px; }
+.desc-chip--destacado { color: oklch(0.48 0.13 75); background: oklch(0.92 0.09 85 / 0.5); }
+.ficha-chips-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+.ficha-chips-row .desc-chip { margin-bottom: 0; }
+.desc-badge--destacado { top: 10px; left: 10px; right: auto; display: inline-flex; align-items: center; padding: 4px 10px; font-size: 12px; font-weight: 700; color: oklch(0.42 0.12 75); background: oklch(0.94 0.10 85 / 0.95); }
 
 .desc-galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin: 4px 0 8px; }
 .desc-galeria img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 12px; border: 1px solid var(--line-soft); }
@@ -1879,6 +1883,7 @@ html[data-mood="oscuro"] .btn-action--reject:hover { background: oklch(0.55 0.15
 .buscador-tipo--evento { background: oklch(0.85 0.10 300 / 0.22); color: oklch(0.48 0.14 300); }
 .buscador-tipo--ruta { background: oklch(0.85 0.09 200 / 0.22); color: oklch(0.46 0.12 200); }
 .buscador-tipo--recomendacion { background: oklch(0.88 0.10 90 / 0.28); color: oklch(0.45 0.11 85); }
+.buscador-tipo--comercio { background: oklch(0.85 0.10 20 / 0.22); color: oklch(0.48 0.14 20); }
 .buscador-nombre { font-weight: 600; font-size: 16px; }
 .buscador-detalle { display: block; color: var(--muted); font-size: 14px; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .buscador-vacio { padding: 16px; color: var(--muted); font-size: 14.5px; margin: 0; }

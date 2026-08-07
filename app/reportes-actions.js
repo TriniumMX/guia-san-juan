@@ -6,10 +6,12 @@ import { supabaseAdmin } from '../lib/supabase-admin';
 const TABLA = {
   tramite: 'tramite_reportes', dependencia: 'dependencia_reportes',
   lugar: 'lugar_reportes', evento: 'evento_reportes', ruta: 'ruta_reportes', recomendacion: 'recomendacion_reportes',
+  comercio: 'comercio_reportes',
 };
 const COL = {
   tramite: 'tramite_id', dependencia: 'dependencia_id',
   lugar: 'lugar_id', evento: 'evento_id', ruta: 'ruta_id', recomendacion: 'recomendacion_id',
+  comercio: 'comercio_id',
 };
 
 export async function reportarDato(tipo, id, mensaje, honeypot) {

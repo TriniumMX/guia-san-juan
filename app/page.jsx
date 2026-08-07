@@ -78,6 +78,7 @@ export default function Home() {
             <a className="navlink" href="/lugares">Lugares</a>
             <a className="navlink" href="/eventos">Eventos</a>
             <a className="navlink" href="/rutas">Rutas</a>
+            <a className="navlink" href="/comercios">Comercios</a>
             <a className="navlink" href="/tramites">Trámites</a>
             <a className="navlink" href="/directorio">Directorio</a>
           </nav>
@@ -179,6 +180,11 @@ export default function Home() {
                 <span className="acceso-txt"><b>Rutas</b><span>Recorridos armados para aprovechar tu visita.</span></span>
                 <span className="acceso-arrow" aria-hidden="true">→</span>
               </a>
+              <a className="acceso" href="/comercios" style={{ '--cat': 'oklch(0.6 0.13 20)' }}>
+                <span className="acceso-ico" aria-hidden="true">🛍️</span>
+                <span className="acceso-txt"><b>Comercios</b><span>Negocios locales: dónde comer, comprar y resolver.</span></span>
+                <span className="acceso-arrow" aria-hidden="true">→</span>
+              </a>
               <a className="acceso" href="/recomendaciones" style={{ '--cat': 'oklch(0.58 0.12 90)' }}>
                 <span className="acceso-ico" aria-hidden="true">💡</span>
                 <span className="acceso-txt"><b>Recomendaciones</b><span>Tips y consejos para disfrutar y moverte por la ciudad.</span></span>
@@ -242,10 +248,8 @@ export default function Home() {
               <p className="lead">Estamos construyendo la guía sección por sección. Sé de los primeros en enterarte.</p>
             </div>
             <div className="soon-grid">
-              <div className="soon reveal"><span className="n">01</span><span className="label">Guía de comercios locales</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">02</span><span className="label">Espacios para negocios sanjuanenses</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">03</span><span className="label">Respuestas al instante por WhatsApp</span><span className="chip">Pronto</span></div>
-              <div className="soon reveal"><span className="n">04</span><span className="label">La guía en tu celular</span><span className="chip">Pronto</span></div>
+              <div className="soon reveal"><span className="n">01</span><span className="label">Respuestas al instante por WhatsApp</span><span className="chip">Pronto</span></div>
+              <div className="soon reveal"><span className="n">02</span><span className="label">La guía en tu celular</span><span className="chip">Pronto</span></div>
             </div>
             <p className="soon-note reveal">
               <span className="pulse"></span> Estamos construyendo esta guía paso a paso, con información útil todo el año.
@@ -357,6 +361,7 @@ export default function Home() {
                 <li><a href="/lugares">Lugares</a></li>
                 <li><a href="/eventos">Eventos</a></li>
                 <li><a href="/rutas">Rutas</a></li>
+                <li><a href="/comercios">Comercios</a></li>
                 <li><a href="/recomendaciones">Recomendaciones</a></li>
                 <li><a href="/tramites">Trámites</a></li>
                 <li><a href="/directorio">Directorio</a></li>
